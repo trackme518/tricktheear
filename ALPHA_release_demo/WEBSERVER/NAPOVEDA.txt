@@ -1,0 +1,7 @@
+Obsah serveru vložte do adresáře "html".
+Dvakrát klikněte na "WEBSERVER" - nic se na první pohled nestane, ale spustí se webserver.
+Jděte do složky "html" a kliněte na "index.html" - otevře se váš defaultní internetový prohlížeč s clientem.
+
+Start serveru je třeba automatizovat - vložte zástupce na  "nginx.exe" do složky startup.
+Složka se otevře příkazem "Win+R", "shell:startup", "enter". 
+Server se pak spustí při každém spuštění windows.

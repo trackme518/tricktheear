@@ -1,0 +1,29 @@
+<html>
+<head>
+  <title>My A-Frame Scene</title>
+  <script src="./scripts/aframe104.js"></script>
+  
+  
+  <script src="./scripts/volumetric_light.js"></script>
+  
+  <!-- <script src="./scripts/volumetric_light.js"></script>  -->
+  <!--
+  <script src="https://rawgit.com/gmarty/aframe-ui-components/master/dist/aframe-ui-components.min.js"></script>
+  -->
+</head>
+
+<body>
+  <a-scene>
+  <a-sky color="grey"></a-sky>
+    <a-cone height="5"
+            radius-top="0.5"
+            radius-bottom="1.5"
+            open-ended="true"
+            position="0 2.5 -5"
+            transparent="true"
+            material="shader: volumetric-light; lightColor: 1 1 1; spotPosition: 0 2.5 -5; anglePower: 6; attenuation: 10;"></a-cone>
+            
+            <a-sphere radius="2" color="green" position="0 2 -8"></a-sphere>
+  </a-scene>
+</body>
+</html>
