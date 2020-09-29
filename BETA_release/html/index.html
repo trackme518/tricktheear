@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>    
+    <head>             
+        <meta charset="utf-8">             
+        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">             
+        <title>Trick the Ear - Music in VR</title>             
+        <meta name="description" content="Spatial audio in VR with multiple scenes. Music is inspired by Virtues and Vices sculpture series by Matyas Braun displayed at Kuks UNESCO site. Implemented in A-frame.">                  
+        <link rel="stylesheet" href="style.css">   
+<script src="./scripts/aframe104.js"></script> <!-- main framwork --> 
+<script src="scripts/oceanShader.js"></script><!-- modified ocean shader https://medium.com/samsung-internet-dev/i-made-my-first-pr-to-a-frame-3675d596a2d8 -->
+<script src="scripts/lookAt.js"></script> <!-- lookAt component - orient object  to face other object https://unpkg.com/browse/aframe-look-at-component@0.8.0/ -->
+
+<script src="./scripts/createMenu.js"></script>     
+<script src="./scripts/loadScene.js"></script>                
+<!-- enable mouse to act as cursor on desktop -->              
+  
+<script src="scripts/aframe-audioanalyser-component.js"></script>   
+<script src="scripts/intensity.js"></script>   
+<script src="scripts/particle.js"></script>           
+     
+<!--  
+<script src="https://unpkg.com/aframe-ambisonic-component"></script>
+ -->            
+    </head>    
+    <body>          
+        <!-- hack the autoplay ban - user must interact first -->         
+        
+        <!--
+        <div id="loading">            
+            <button id="btn-start">CLICK TO START             
+            </button>        
+        </div>
+        -->
+                   
+        <a-scene id="VR_scene" stats loading-screen="dotsColor: white; backgroundColor: black" fog="type: linear; color: #AAB; far: 35; near: 0" antialias="false" background="color: black;">
+        <!-- position x= -vlevo + vpravo; y=výška + nahoru, - dolu;  z= - dopredu / + dozadu  -->                      
+        <!-- pitch / yaw / roll ve skutecnosti ale yaw / pitch / roll            
+            
+            <!--
+            <a-entity position="0 2.25 -15" particle-system="preset: dust;  particleCount: 500; color: #FFE8E8, #E8FFF0"></a-entity>
+            -->
+            
+            <!--            
+            <a-assets id="assets" timeout="1000">                
+            </a-assets>                   
+            -->
+
+             <!-- -static lights for all scenes -->                        
+            <a-entity light="type: directional; color: rgb(255,255,255); intensity: 1.0;" position="-6.0 10.0 -3.0"></a-entity>            
+            <a-entity light="type: ambient; color: rgb(255,255,255); intensity: 1.0;" ></a-entity>            
+            
+            <a-entity id="mainmenu" createmenu visible="true"></a-entity>
+            <a-entity position="0 2 0" id="center"></a-entity> <!-- all text will face towards this point - see LookAt component-->
+                                                 
+            <!--           <a-entity animation="property: rotation; to: 0 360 0; dur: 800000; easing: linear; loop: true">    -->                                      
+            <!--<a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>-->                           
+            <!--< <a-entity light="type: directional; color: rgb(235,255,235); intensity: 1.0; castShadow: true;" position="-6.0 10.0 -3.0"  rotation="-90 0 0" target="#target_1" -->                           
+            
+            <!-- the audio that the light should react to based on overall relative volume -->
+            <audio id="audioreact" crossOrigin="anonymous" src=""></audio>
+            
+            <a-light id="soundReactive" color="orange" type="spot" angle="45" intensity="1.0" castShadow="true" position="-6.0 30.0 -3.0"  rotation="-90 0 0" target="#target_1" 
+            audioanalyser="src: #audioreact; enableVolume: true; enableLevels: false; enableBeatDetection: false;  enableWaveform: false; fftSize: 128; " audioanalyser-volume-intensity="multiplier: 0.1">                                 
+                <a-entity id="target_1" position="0 0 -1"></a-entity>                                 
+                <a-sphere radius="3.0" color="white" id="moon"></a-sphere>                                    
+            </a-light>                                        
+                                                                                                                
+            <!-- placeholder for dynamically loaded models - see loadScene.js -> loadscene component -->
+            <a-entity rotation="0 35 0" id="currmodels"></a-entity>
+             <!-- placeholder for dynamically loaded dressing components see loadscene component -->
+            <a-entity id="scenedeco"></a-entity> 
+                                                             
+            <!--
+            <a-entity id="cave" gltf-model="#cave" position="0 0 -20" rotation="0 0 0"  scale="2.0 2.0 2.0" shadow="cast: false"></a-entity>
+            -->
+                                          
+            <a-entity laser-controls="hand: right" raycaster="objects: .clickable;">            
+            </a-entity>                         
+            <!-- enable mouse control on desktop -->                       
+            <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: .clickable">            
+            </a-entity>                                      
+            
+            <!-- enable wasd / arrows control on desktop -->                                  
+            <a-camera far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                          
+                <!-- Text element for display messaging.  Hide once audio is playing. -->  	                 
+                
+               <a-box  id="fade" color="black" height="2" width="2" depth="2" position="0 0 0" transparent="true" material="opacity: 0.0; shader: flat; side: back;"
+               animation__fadein="property: material.opacity; from: 1.0; to: 0.0; easing: linear; dur: 1000; startEvents: fadein;"
+               animation__fadeout="property: material.opacity; from: 0.0; to: 1.0; easing: linear; dur: 1000; startEvents: fadeout;" >
+               </a-box >
+               
+                 <a-entity id="msg" position="0 0 -0.9" text="align:center; width:2;wrapCount:12;color:white;font: https://cdn.aframe.io/fonts/mozillavr.fnt;value:Loading...; opacity: 0.0" visible="true" scale="0.5 0.5 0.5"
+                animation__fadein="property: text.opacity; from: 1.0; to: 0.0; easing: linear; dur: 1000; startEvents: fadein;"
+               animation__fadeout="property: text.opacity; from: 0.0; to: 1.0; easing: linear; dur: 1000; startEvents: fadeout;"></a-entity>
+                 
+                                
+                <!-- enable gaze control / fuse control on mobile... -->                             
+                <!--
+                                        <a-entity animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+                                        animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+                                        animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+                                        cursor="maxDistance: 30; fuse: false;"
+                                        raycaster="objects: .clickable"
+                                        material="color: cyan; shader: flat"
+                                        position="0 0 -1"
+                                        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;">
+                                        </a-entity>
+                                        -->                   
+            </a-camera>                
+        </a-scene>  
+    </body>
+</html>
