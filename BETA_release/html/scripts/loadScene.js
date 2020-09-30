@@ -1,6 +1,4 @@
-//LOAD SCENES DYNAMICALLY
-
-  
+//LOAD SCENES DYNAMICALLY 
 AFRAME.registerComponent('loadscene', {  
    schema: {
     id: {type: 'number', default: 0}
@@ -58,7 +56,6 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     }
 
 //------------------------------------------------
-
     var scenemodels = document.getElementById('currmodels');
     
     for (i = 0; i < 4; i++) {
@@ -70,80 +67,23 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
       } else{  //model already exists
         entity = currEl;        
       }  
-      //set static params-----------------         
-        entity.setAttribute("class", "model");
-        entity.setAttribute("id", currId);
-        entity.setAttribute('scale', '1.0 1.0 1.0 ');
-        entity.setAttribute('shadow', 'cast: true');
-        
-       //set dynamic params from class-----------------    
-        entity.setAttribute('gltf-model',scenes[currScene].modSrc[i])  //it is easier to assign texture dynamically to .obj than to .glb - you have to traverse three.js internal loader for that
-        //entity.setAttribute('material', 'src: models/molten/diffX.jpg; normalMap: models/molten/normal.jpg;'); //assign texture - can be changed dynamically
-        entity.setAttribute('position',scenes[currScene].modPos[i]);
-        entity.setAttribute('rotation',scenes[currScene].modRot[i]);
-        
-        currSoundpar =  'src: url('+scenes[currScene].modSound[i]+'); volume: 0.3; autoplay: false; distanceModel: inverse;';
-        entity.setAttribute('sound', currSoundpar );
-        
-        if(i == 0){ //set first track as source for audio analyser in scene -> it is hooked up to dynamic light intensity in the scene //check against scene id: scenes[currScene].id
-           var webaudio = document.querySelector('#audioreact');
-           webaudio.setAttribute('src', scenes[currScene].modSound[i] );
-        }
-        
-        //loadedModels[i] = entity; //save created entitites into array for later use
-        loadedModels.push(entity);
-        console.log('pushed '+entity.id);
-                   
-       //check if loaded----------------------------------
-        console.log('what id: '+ entity.id);
-        entity.addEventListener( 'loaded', checkLoaded   ); //add event listener for loaded - triggered by model mesh loaded
-        entity.addEventListener( 'sound-loaded', checkLoaded ); //add event listener for loaded  - triggered by sound ready to play
-        entity.addEventListener('sound-loaded', ()=> {console.log('adad sound loaded')});
-        entity.addEventListener('sound-ended', createMenu );
-      //------------------     
-      if(currEl == null) { //first time we are creating the model
-        scenemodels.appendChild(entity); //append created element to scene
-      }     
+      //set static params-----------------
+      addEntity(scenemodels, ['class=model','id='+currId,'scale=1.0 1.0 1.0','shadow=cast:true', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 0.3; autoplay: false; distanceModel: inverse;'], 'a-entity' );
+ 
+      if(i == 0){ //set first track as source for audio analyser in scene -> it is hooked up to dynamic light intensity in the scene //check against scene id: scenes[currScene].id
+        var webaudio = document.querySelector('#audioreact');
+        webaudio.setAttribute('src', scenes[currScene].modSound[i] );
+      }
+
     }//end load models
     
        //dressing assets
     switch( scenes[currScene].modId ) { //add dressing elements based on scene id
       case 0:
-        // <a-entity id="skeleton" gltf-model="#skeleton" position="0 0 -20" rotation="0 0 0" scale="2.0 2.0 2.0" src="tex.jpg" shadow="cast: true"></a-entity>
         var decoEl = document.querySelector('#scenedeco');
-        var entity = document.createElement('a-entity');
-
-        var decoSrc =  'models/deco/skeleton.glb';
-        //entity.setAttribute("id", "skeleton");
-        entity.setAttribute('id','skeleton');
-        entity.setAttribute('gltf-model',decoSrc);
-        entity.setAttribute('position','0 0 -20');
-        entity.setAttribute('scale','2.0 2.0 2.0');
-        entity.setAttribute('shadow', 'cast: true');
-        decoEl.appendChild(entity);
-       
-        entity.addEventListener( 'loaded', checkLoaded ); //add event listener for loaded
-        
-        // <a-sky  src="#sky" material="fog: false"></a-sky>
-
-        var decoSrc =  'images/sky0.jpg';
-        entity = document.createElement('a-sky');
-        entity.setAttribute('id','scene_sky'); 
-        entity.setAttribute('src', 'images/sky0.jpg');
-        entity.setAttribute('material','fog: false');
-        decoEl.appendChild(entity);
-      
-        entity.addEventListener( 'loaded', checkLoaded ); //add event listener for loaded
-        
-        //<a-ocean-plane material="normalMap: #water-normal; sphericalEnvMap: #waterTex;" position="0 0 0" ></a-ocean-plane>  
-
-        entity = document.createElement('a-ocean-plane'); //see oceanShader.js component for more 
-        entity.setAttribute('id','scene_floor');
-        entity.setAttribute('position','0 0 0');
-        decoEl.appendChild(entity);
-        
-        entity.addEventListener( 'loaded', checkLoaded ); //add event listener for loaded
-       
+        addEntity(decoEl, ['gltf-model=models/deco/skeleton.glb','id=skeleton','position=0.0 0.0 -20.0','scale=2.0 2.0 2.0', 'shadow=cast:true'], 'a-sky');
+        addEntity(decoEl, ['src=images/sky0.jpg','id=scene_sky','material=fog:false'], 'a-sky');
+        addEntity(decoEl, ['id=scene_floor','position=0 0 0'], 'a-ocean-plane');
         break;
       case 1:
         // code block
@@ -151,10 +91,36 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
       default:
         // code block
     }
-    //------------------------------------------------------ 
-
-
-     //-----------------------------------------------------
+    //-----------------------------------------------------------------------------------
+    //settign attributes to entities so repeptitive so I wrote a function to do it for me: 
+    function addEntity(elParent, htmlString, htmlTag){
+      var currEl = document.createElement(htmlTag);
+      var soundPar = false;
+         for(var r=0; r < htmlString.length; r++ ){
+           var getArs = htmlString[r].split('='); 
+             if(getArs.length==2){//we have pair
+                currEl.setAttribute(getArs[0],getArs[1]); //set parsed attribute
+                    if(getArs[0] === 'sound'){
+                    soundPar = true;
+                    }
+                //console.log(getArs[0]+'='+getArs[1]);
+             }
+             if(getArs.length==1){//only solo argument - hey might be component
+                currEl.setAttribute(getArs[0],''); //set parsed attribute
+             }
+         }
+        elParent.appendChild(currEl); //appned created entity to given parent
+        currEl.addEventListener( 'loaded', checkLoaded ); //attach event listener for loaded event
+        
+        if(soundPar){//if there is also sound component add another listener
+        currEl.addEventListener( 'sound-loaded', checkLoaded );
+        currEl.addEventListener('sound-ended', createMenu );
+        loadedModels.push(currEl); //save reference to whole entity with sound comp.
+        console.log(currEl);
+        } 
+         
+      }
+     //------------------------------------------------------------------------
       //function checkLoaded(whatEle, typeEle){
       function checkLoaded(){  
       //not that sound-loaded event will fire only once per resource even it it is attached to multiple entities - therefore it wont trigger if you would have 4entities with same src for sound component
@@ -183,7 +149,6 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         loadedModels = []; //reset array with loaded entities
         }//end all four models loaded
       }
-
      //-----------------------------------------------------
     function createMenu(){
     musicEnded++;
@@ -202,7 +167,6 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     //-----------------------------------------------------
 
    }//end loadScene
-
 
   } //end init function
 
