@@ -56,8 +56,8 @@
             <!--<a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>-->                           
             <!--< <a-entity light="type: directional; color: rgb(235,255,235); intensity: 1.0; castShadow: true;" position="-6.0 10.0 -3.0"  rotation="-90 0 0" target="#target_1" -->                           
             
-            <!-- the audio that the light should react to based on overall relative volume -->
-            <audio id="audioreact" crossOrigin="anonymous" src=""></audio>
+            <!-- the audio that the light should react to based on overall relative volume - provide placeholder to prevent uncaugth error in console -->
+            <audio id="audioreact" crossOrigin="anonymous" src="audio/noise5s.ogg"></audio>
             
             <a-light id="soundReactive" color="orange" type="spot" angle="45" intensity="1.0" castShadow="true" position="-6.0 30.0 -3.0"  rotation="-90 0 0" target="#target_1" 
             audioanalyser="src: #audioreact; enableVolume: true; enableLevels: false; enableBeatDetection: false;  enableWaveform: false; fftSize: 128; " audioanalyser-volume-intensity="multiplier: 0.1">                                 
