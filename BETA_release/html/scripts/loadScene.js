@@ -4,7 +4,7 @@ AFRAME.registerComponent('loadscene', {
     id: {type: 'number', default: 0}
   },
   init:function() {
-     var currScene =  this.data.id; //get scene selector
+     var currScene =  parseInt(this.data.id); //get scene selector
      var numLoaded = 0; //keep track how many essential assets are loaded - ie models + audio
      var assetCount = 0; //how many addtional assets needs to be loaded - differs scene to scene
      var triggered = false;
@@ -52,7 +52,6 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
     currScene = 0;
-    currId = 0; 
     }
 
 //------------------------------------------------
@@ -130,7 +129,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
          event.target.removeEventListener(event.type, checkLoaded);
        }
        
-       console.log(event.target.id+' loaded '+numLoaded+' out of '+assetCount+' type: '+ event.type ); //debug
+       console.log(event.target.id+' loaded '+numLoaded+' out of '+scenes[currScene].assetCount+' type: '+ event.type ); //debug
         
         if(numLoaded == scenes[currScene].assetCount) { // we want all models and sounds ready before starting the playback
         numLoaded = 0; //reset assests loaded num count
