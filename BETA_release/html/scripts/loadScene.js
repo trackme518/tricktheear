@@ -46,7 +46,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     this.assetCount = assetCount;
     }
     //creating new instances of scene object 
-    scenes.push( new vrScene( 0, 11, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/1_AIVA_bass.ogg', 'audio/1_AIVA_chords.ogg', 'audio/1_AIVA_melody.ogg', 'audio/noise3.ogg'] )  );
+    scenes.push( new vrScene( 0, 11, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/1_AIVA_bass.ogg', 'audio/2_AIVA_chords.ogg', 'audio/3_AIVA_melody.ogg', 'audio/noise3.ogg'] )  );
     scenes.push( new vrScene( 1, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/noise0.ogg', 'audio/noise1.ogg', 'audio/noise2.ogg', 'audio/noise3.ogg'] )  );
        
     if( parseInt(currScene) > scenes.length-1 ){
