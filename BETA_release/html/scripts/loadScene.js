@@ -45,9 +45,12 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     this.modId = modId;
     this.assetCount = assetCount;
     }
-    //creating new instances of scene object 
-    scenes.push( new vrScene( 0, 11, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/1_AIVA_bass.ogg', 'audio/2_AIVA_chords.ogg', 'audio/3_AIVA_melody.ogg', 'audio/noise3.ogg'] )  );
-    scenes.push( new vrScene( 1, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/noise0.ogg', 'audio/noise1.ogg', 'audio/noise2.ogg', 'audio/noise3.ogg'] )  );
+    //creating new instances of scene object
+    //0=sasa 1=gary 2=ian 3=bratri 
+    scenes.push( new vrScene( 0, 11, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/sasa/Kontrabas.ogg', 'audio/sasa/Saxofon.ogg', 'audio/sasa/Trombon.ogg', 'audio/sasa/Violoncello.ogg'] )  );
+    scenes.push( new vrScene( 1, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/noise0.ogg', 'audio/gary/noise1.ogg', 'audio/gary/noise2.ogg', 'audio/gary/noise3.ogg'] )  );
+    scenes.push( new vrScene( 2, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/ian/noise0.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
+    scenes.push( new vrScene( 3, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/lakomstvi.glb', 'models/pile.glb', 'models/pomluva.glb', 'models/stridmost.glb'],['audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg', 'audio/bratri/stridmost.ogg'] )  );
        
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
@@ -67,8 +70,15 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         entity = currEl;        
       }  
       //set static params-----------------
-      addEntity(scenemodels, ['class=model','id='+currId,'scale=1.0 1.0 1.0','shadow=cast:true', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 0.3; autoplay: false; distanceModel: inverse;'], 'a-entity' );
- 
+      if( scenes[currScene].modId == 3){
+      //obj-model="obj: #tree-obj; mtl: #tree-mtl"
+      addEntity(scenemodels, ['class=model','id='+currId,'scale=1.0 1.0 1.0','shadow=cast: true; receive: true;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;','modify-materials'], 'a-entity' );
+      //addEntity(scenemodels, ['class=model','id='+currId,'scale=1.0 1.0 1.0','shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials'], 'a-entity' );
+      //modify-materials
+      }else{
+      addEntity(scenemodels, ['class=model','id='+currId,'scale=1.0 1.0 1.0','shadow=cast: true', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity' );
+      }
+      
       if(i == 0){ //set first track as source for audio analyser in scene -> it is hooked up to dynamic light intensity in the scene //check against scene id: scenes[currScene].id
         var webaudio = document.querySelector('#audioreact');
         webaudio.setAttribute('src', scenes[currScene].modSound[i] );
