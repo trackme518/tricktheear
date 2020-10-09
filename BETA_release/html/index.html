@@ -5,19 +5,22 @@
         <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">             
         <title>Trick the Ear - Music in VR</title>             
         <meta name="description" content="Spatial audio in VR with multiple scenes. Music is inspired by Virtues and Vices sculpture series by Matyas Braun displayed at Kuks UNESCO site. Implemented in A-frame.">                  
+        <link rel="shortcut icon" href="images/favicon.png" />
         <link rel="stylesheet" href="style.css">   
 <script src="./scripts/aframe104.js"></script> <!-- main framwork --> 
 <script src="scripts/oceanShader.js"></script><!-- modified ocean shader https://medium.com/samsung-internet-dev/i-made-my-first-pr-to-a-frame-3675d596a2d8 -->
 <script src="scripts/lookAt.js"></script> <!-- lookAt component - orient object  to face other object https://unpkg.com/browse/aframe-look-at-component@0.8.0/ -->
-<script src="scripts/modify_material.js"></script>
+<script src="scripts/modify_mat.js"></script>
 
 <script src="./scripts/createMenu.js"></script>     
 <script src="./scripts/loadScene.js"></script>                
 <!-- enable mouse to act as cursor on desktop -->              
   
 <script src="scripts/aframe-audioanalyser-component.js"></script>   
-<script src="scripts/intensity.js"></script>   
-<script src="scripts/particle.js"></script>           
+<script src="scripts/intensity.js"></script>
+  
+<script src="scripts/color_on_beat.js"></script>     
+<script src="scripts/ring_on_beat.js"></script>           
      
 <!--  
 <script src="https://unpkg.com/aframe-ambisonic-component"></script>
@@ -28,29 +31,24 @@
     </head>    
     <body>          
         <!-- hack the autoplay ban - user must interact first -->         
-        
+        <!-- https://github.com/digaverse/aframe-resonance-audio-component -->
         <!--
         <div id="loading">            
             <button id="btn-start">CLICK TO START             
             </button>        
         </div>
-        
+        color: #AAB;
         stats
         -->
                    
         <a-scene id="VR_scene"  loading-screen="dotsColor: white; backgroundColor: black" fog="type: linear; color: #AAB; far: 35; near: 0" antialias="false" background="color: black;">
         <!-- position x= -vlevo + vpravo; y=výška + nahoru, - dolu;  z= - dopredu / + dozadu  -->                      
-        <!-- pitch / yaw / roll ve skutecnosti ale yaw / pitch / roll            
+        <!-- pitch / yaw / roll ve skutecnosti ale yaw / pitch / roll -->           
             
             <!--
             <a-entity position="0 2.25 -15" particle-system="preset: dust;  particleCount: 500; color: #FFE8E8, #E8FFF0"></a-entity>
             -->
             
-            <!--            
-            <a-assets id="assets" timeout="1000">                
-            </a-assets>                   
-            -->
-
              <!-- -static lights for all scenes -->                        
             <a-entity light="type: directional; color: rgb(255,255,255); intensity: 1.0;" position="-6.0 10.0 -3.0"></a-entity>            
             <a-entity light="type: ambient; color: rgb(255,255,255); intensity: 1.0;" ></a-entity>            
@@ -62,17 +60,22 @@
             <!--<a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>-->                           
             <!--< <a-entity light="type: directional; color: rgb(235,255,235); intensity: 1.0; castShadow: true;" position="-6.0 10.0 -3.0"  rotation="-90 0 0" target="#target_1" -->                           
             
-            <!-- the audio that the light should react to based on overall relative volume - provide placeholder to prevent uncaugth error in console -->
-            <audio id="audioreact" crossOrigin="anonymous" src="audio/noise5s.ogg"></audio>
+            <!-- the audio that the light should react to based on overall relative volume - provide placeholder to prevent uncaugth error in console src="audio/noise5s.ogg" 
+            audioanalyser="src: #audioreact; enableVolume: true; enableLevels: true; enableBeatDetection: true;  enableWaveform: true; beatDetectionMinVolume: 0.1; fftSize: 2048;
+            -->
+            <audio id="audioreact" crossOrigin="anonymous"></audio>
             
-            <a-light id="soundReactive" color="orange" type="spot" angle="45" intensity="1.0" castShadow="true" position="-6.0 30.0 -3.0"  rotation="-90 0 0" target="#target_1" 
-            audioanalyser="src: #audioreact; enableVolume: true; enableLevels: false; enableBeatDetection: false;  enableWaveform: false; fftSize: 128; " audioanalyser-volume-intensity="multiplier: 0.1">                                 
+            
+            <a-entity id="sound_reactive" audioanalyser="src: #audioreact; beatDetectionThrottle: 50; enableVolume: true; enableLevels: false; enableBeatDetection: true;  enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;"></a-entity>
+            
+            <a-light id="sound_light" color="orange" type="spot" angle="45" intensity="1.0" castShadow="true" position="-6.0 30.0 -3.0"  rotation="-90 0 0" target="#target_1" 
+            audioanalyser-volume-intensity="multiplier: 0.1; analyserEl: #sound_reactive;">                                 
                 <a-entity id="target_1" position="0 0 -1"></a-entity>                                 
-                <a-sphere radius="3.0" color="white" id="moon"></a-sphere>                                    
+                <a-sphere radius="3.0" material="shader: flat; color: rgb(255,255,255); emissive: rgb(255,255,255); fog:false;" id="moon"></a-sphere>                                    
             </a-light>                                        
                                                                                                                 
             <!-- placeholder for dynamically loaded models - see loadScene.js -> loadscene component -->
-            <a-entity rotation="0 35 0" id="currmodels"></a-entity>
+            <a-entity rotation="0 35 0" id="currmodels" ></a-entity>
              <!-- placeholder for dynamically loaded dressing components see loadscene component -->
             <a-entity id="scenedeco"></a-entity> 
                                                              
