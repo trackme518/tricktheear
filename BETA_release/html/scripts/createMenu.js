@@ -6,14 +6,10 @@ AFRAME.registerComponent('createmenu', {
 
     //this completely removes previously loaded models--------------
      var myNode = document.getElementById("currmodels");
-     while (myNode.firstChild) {//remove all created childs
-       myNode.removeChild(myNode.lastChild);
-     }
+     myNode.innerHTML = '';
      //delete all decorations from previous scene
-     myNode = document.querySelector('#scenedeco');
-      while (myNode.firstChild) {//remove all created childs
-       myNode.removeChild(myNode.lastChild);
-     }
+     myNode = document.getElementById('scenedeco');
+     myNode.innerHTML = '';
     //------------------------------------------
 
     var r = 3;

@@ -28,10 +28,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
  //this completely removes all menu elements--------------
  var myNode = document.getElementById("mainmenu");
  myNode.removeAttribute("createmenu"); //remove js component
-           
- while (myNode.firstChild) {//remove all created childs
-   myNode.removeChild(myNode.lastChild);
- }
+ myNode.innerHTML=''; //this is more effecient than traversing childs
 
 //---------------------------------------------------- 
    console.log('selected scene: '+currScene);
@@ -49,8 +46,8 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     //creating new instances of scene object
     //0=sasa 1=gary 2=ian 3=bratri 
     scenes.push( new vrScene( 0, 13,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost4.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost4.glb'],['audio/sasa/Kontrabas.ogg', 'audio/sasa/Saxofon.ogg', 'audio/sasa/Trombon.ogg', 'audio/sasa/Violoncello.ogg'] )  );
-    scenes.push( new vrScene( 1, 9,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/noise0.ogg', 'audio/gary/noise1.ogg', 'audio/gary/noise2.ogg', 'audio/gary/noise3.ogg'] )  );
-    scenes.push( new vrScene( 2, 9,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/ian/noise0.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
+    scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
+    scenes.push( new vrScene( 2, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/ian/noise0.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
     //scenes.push( new vrScene( 3, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/lakomstvi.glb', 'models/pile.glb', 'models/pomluva.glb', 'models/stridmost.glb'],['audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg', 'audio/bratri/stridmost.ogg'] )  );
     scenes.push( new vrScene( 3, 15,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost.obj', 'models/bratri/lakomstvi.obj', 'models/bratri/pile.obj', 'models/bratri/pomluva.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
@@ -64,13 +61,6 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     
     for (i = 0; i < 4; i++) {
       var currId = 'model'+i;
-      var currEl = document.getElementById(currId);
-      var entity;
-      if(currEl == null) { //first time we are creating the model
-        entity = document.createElement('a-entity');
-      } else{  //model already exists
-        entity = currEl;        
-      }  
       //set static params-----------------
       if( scenes[currScene].modId == 3){
       //obj-model="obj: #tree-obj; mtl: #tree-mtl"
