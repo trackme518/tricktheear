@@ -28,7 +28,10 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
  //this completely removes all menu elements--------------
  var myNode = document.getElementById("mainmenu");
  myNode.removeAttribute("createmenu"); //remove js component
- myNode.innerHTML=''; //this is more effecient than traversing childs
+           
+ while (myNode.firstChild) {//remove all created childs
+   myNode.removeChild(myNode.lastChild);
+ }
 
 //---------------------------------------------------- 
    console.log('selected scene: '+currScene);
@@ -49,7 +52,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
     scenes.push( new vrScene( 2, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/ian/noise0.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
     //scenes.push( new vrScene( 3, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/lakomstvi.glb', 'models/pile.glb', 'models/pomluva.glb', 'models/stridmost.glb'],['audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg', 'audio/bratri/stridmost.ogg'] )  );
-    scenes.push( new vrScene( 3, 15,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost.obj', 'models/bratri/lakomstvi.obj', 'models/bratri/pile.obj', 'models/bratri/pomluva.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
+    scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost.obj', 'models/bratri/lakomstvi.obj', 'models/bratri/pile.obj', 'models/bratri/pomluva.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
@@ -58,62 +61,82 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
 
 //------------------------------------------------
     var scenemodels = document.getElementById('currmodels');
+    var decoEl =  document.getElementById('scenedeco'); //dressing assets
+    var myAssets =  document.getElementById('myassets');
     
     for (i = 0; i < 4; i++) {
       var currId = 'model'+i;
-      //set static params-----------------
+
+      var thisAudio = 'audioreact'+i;
+      addEntity(myAssets, ['src='+scenes[currScene].modSound[i],'id='+thisAudio], 'audio', null);
+      var setAnalyser = 'audioanalyser=src: #'+thisAudio+';  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;';
+      
+      //scene specific code-----------------
       if( scenes[currScene].modId == 3){
-      //obj-model="obj: #tree-obj; mtl: #tree-mtl"
-       //default for all statues
-       //var statuesStats =  ['class=model','id='+currId,'scale=1.0 1.0 1.0','shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: url(images/pattern1.jpg); color: grey; offset: 0 0; repeat: 20 20;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'];
-       //'ring-on-beat=analyserEl: #sound_reactive'
+      addEntity(myAssets, ['src=images/circle.jpg','id=tex_circle'], 'img', null);
+      addEntity(myAssets, ['src=images/lines.jpg','id=tex_lines'], 'img', null);
+      addEntity(myAssets, ['src=images/symbols.jpg','id=tex_symbols'], 'img', null);
+      addEntity(myAssets, ['src=images/strip.jpg','id=tex_strip'], 'img', null);
+           
        switch(i) {
-        case 0:  //+scenes[currScene].modScale[i]
-          addEntity(scenemodels,  ['class=model','id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: url(images/circle.jpg); color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat=analyserEl: #sound_reactive','color-on-beat=analyserEl: #sound_reactive; counter: 255;'], 'a-entity' );
+        case 0:                                                                                                                                                                                                                                                                                                                                                                                                                                                    //analyserEl: #sound_reactive1;
+          addEntity(scenemodels,  ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_circle ; color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat','color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         case 1:
-          addEntity(scenemodels, ['class=model','id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: url(images/lines.jpg); color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=analyserEl: #sound_reactive; counter: 255;'], 'a-entity' );
+          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_lines; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         case 2:
-          addEntity(scenemodels, ['class=model','id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: url(images/symbols.jpg); color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=analyserEl: #sound_reactive; counter: 255;'], 'a-entity' );
+          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         default:
-          addEntity(scenemodels, ['class=model','id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: url(images/strip.jpg); color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials=analyserEl: #sound_reactive'], 'a-entity' );
+          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_strip; color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials'], 'a-entity', null );
         }
      
       }else{
-      addEntity(scenemodels, ['class=model','id='+currId,'scale='+scenes[currScene].modScale[i],'material=color: #000000','shadow=cast: true', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: url('+scenes[currScene].modSound[i]+'); volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity' );
-      }
-      
-      if(i == 0){ //set first track as source for audio analyser in scene -> it is hooked up to dynamic light intensity in the scene //check against scene id: scenes[currScene].id
-        var webaudio = document.getElementById("audioreact");
-        webaudio.setAttribute('src', scenes[currScene].modSound[i] );
-        webaudio.addEventListener( 'loaded', checkLoaded ); //attach event listener for loaded event
+        addEntity(scenemodels, ['class=model','id='+currId,'scale='+scenes[currScene].modScale[i],'material=color: #000000','shadow=cast: true', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null ); 
       }
 
-    }//end load models
+    }//end load models      
     
-    var decoEl =  document.getElementById('scenedeco'); //dressing assets
     switch( scenes[currScene].modId ) { //add dressing elements based on scene id
       case 0://sasa
         document.getElementById('VR_scene').setAttribute('fog','type: linear; color: #AAB; far: 35; near: 0');
-        addEntity(decoEl, ['gltf-model=models/deco/skeleton.glb','id=skeleton','position=0.0 0.0 -20.0','scale=2.0 2.0 2.0', 'shadow=cast:true'], 'a-entity');
-        addEntity(decoEl, ['src=images/sky0.jpg','id=scene_sky','material=fog:false'], 'a-sky');
-        addEntity(decoEl, ['id=scene_floor','position=0 0 0'], 'a-ocean-plane');
+        addEntity(decoEl, ['gltf-model=models/deco/skeleton.glb','id=skeleton','position=0.0 0.0 -20.0','scale=2.0 2.0 2.0', 'shadow=cast:true'], 'a-entity', null);
+        addEntity(myAssets, ['src=images/sky0.jpg','id=skytex'], 'img', null);
+        addEntity(decoEl, ['src=#skytex','id=scene_sky','material=fog:false'], 'a-sky', null);
+        //a-ocean-plane
+        addEntity(myAssets, ['src=images/waternormals.jpg','id=waternorm'], 'img', null);//waternormals.jpg
+        addEntity(myAssets, ['src=images/water_tex.jpg','id=watertex'], 'img', null);
+        addEntity(decoEl, ['id=scene_floor', 'wobble-normal', 'rotation=-90 0 0', 'width=10000', 'height=10000', 'material=color: #000000; transparent: true; metalness: 1; roughness: 0.2; normalMap: #waternorm; sphericalEnvMap: #watertex; normalTextureRepeat: 50 50; normalTextureOffset: 0 0; normalScale: 0.5 0.5; opacity: 0.8; shader: standard;' ], 'a-plane', null);
+        
+        //add light reacting to first music track
+        addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
+        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
         break;
       case 3://bratri
         //document.getElementById('VR_scene').removeAttribute('fog');
         document.getElementById('VR_scene').setAttribute('fog','type: linear; color: black; far: 30; near: 0');
-        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=images/glitch512bw.jpg', 'material=repeat: 20 20;','rotation=-90 0 0'], 'a-plane');
-        addEntity(decoEl, ['src=images/strip.jpg','material=repeat: 1 1;','id=scene_sky'], 'a-sky');
+        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=images/glitch512bw.jpg', 'material=repeat: 20 20;','rotation=-90 0 0'], 'a-plane', null);
+        //add light reacting to first music track
+        addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
+        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
         break;
       default:
         // code block
     }
     //-----------------------------------------------------------------------------------
     //settign attributes to entities so repeptitive so I wrote a function to do it for me: 
-    function addEntity(elParent, htmlString, htmlTag){
-      var currEl = document.createElement(htmlTag);
+    function addEntity(elParent, htmlString, htmlTag, currEl){
+    
+    var _append = false;
+    
+        if(!currEl){ //if the element is null it does not exists yet so create it:
+        currEl = document.createElement(htmlTag);
+        _append = true;
+        }else{
+
+        }
+      
       var soundPar = false;
       var textureModel = false;
          for(var r=0; r < htmlString.length; r++ ){
@@ -134,13 +157,22 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
                 currEl.setAttribute(getArs[0],''); //set parsed attribute
              }
          }
+        
+        if(_append){
         elParent.appendChild(currEl); //appned created entity to given parent
-        currEl.addEventListener( 'loaded', checkLoaded ); //attach event listener for loaded event
+        }
+        
+        //currEl.addEventListener( 'loaded', checkLoaded ); //attach event listener for loaded event
         
         if(htmlTag === 'a-sky' || textureModel  || htmlTag === 'a-ocean-plane'){
         //currEl.addEventListener('materialtextureloaded', function(){ console.log('texture for sky loaded!'); });
-        currEl.addEventListener( 'materialtextureloaded', checkLoaded );
+            currEl.addEventListener( 'materialtextureloaded', checkLoaded );
+        }else if (htmlTag === 'audio' ||  htmlTag === 'img'){
+          //do not add event listener - we are already checking with sound components respectively, besides it does not work reliably :-)
+        } else{
+            currEl.addEventListener( 'loaded', checkLoaded ); //attach event listener for loaded event
         }
+        
         
         if(soundPar){//if there is also sound component add another listener
         currEl.addEventListener( 'sound-loaded', checkLoaded );
@@ -185,15 +217,22 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         
             document.getElementById('fade').emit('fadein');
             document.getElementById('msg').emit('fadein');
-            var webaudio = document.getElementById('audioreact');  //start <audio> - first track hooked to non spatial audio tag
-            webaudio.volume = 0.01; //set almost inaudible volume -> audio analyser needs basic non spatial audio source
-            webaudio.play(); //start the non spatial audio playback - analyser will react with light intensity to it
-
+            
+            //var webaudio = document.getElementById('audioreact0');  //start <audio> - first track hooked to non spatial audio tag
+            //webaudio.volume = 0.01; //set almost inaudible volume -> audio analyser needs basic non spatial audio source
+            //webaudio.play(); //start the non spatial audio playback - analyser will react with light intensity to it
+           
             for (x = 0; x < 4; x++) {
                 if(loadedModels.length>3){
-                loadedModels[x].components.sound.playSound();
+                    var webaudio = document.getElementById('audioreact'+x);
+                    //console.log('this ID '+webaudio.id);
+                    webaudio.volume = 0.01;
+                    webaudio.play();
+                    loadedModels[x].components.sound.playSound();
                 }
            }//end for all models
+         console.log('webaudio playback started');   
+           
         loadedModels = []; //reset array with loaded entities
         }//end all four models loaded
       }

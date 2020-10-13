@@ -9,13 +9,15 @@ AFRAME.registerComponent('ring-on-beat', {
   init: function () {
   
     var analyserEl = this.data.analyserEl || this.el;
+    
     //console.log("ring-on-beat registered " + analyserEl.id);
+    
     var el = this.el;
     var rings = this.rings = [];
 
     //analyserEl.addEventListener('audioanalyser-beat', function () {
     analyserEl.addEventListener('audioanalyserbeat', function () {
-    //console.log("beat");
+   //console.log("beat");
       var ringEl = document.createElement('a-ring');
       //ringEl.setAttribute('material', 'opacity', '0.6');
       ringEl.setAttribute('position', '0 0.001 0');

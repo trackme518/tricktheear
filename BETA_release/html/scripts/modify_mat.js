@@ -1,42 +1,15 @@
     AFRAME.registerComponent("modify-materials", {
+         //dependencies: ['b'],
          schema: {
             analyserEl: {type: 'selector'}
-        },
-        init: function() {
-        this.analyser = this.data.analyserEl.components.audioanalyser || this.el.components.audioanalyser;
-          //this.analyser = document.getElementById('soundReactive').components.audioanalyser;
-          this.currOffset = 0;
-          
-          var el = this.el;
-          this.counter = 0;
-          let self = this; // used to reference the component, within the listener fuction
-          var mesh;
-          
-          var numLoaded = 0;
-
-          this.el.addEventListener("model-loaded", allLoaded);
-          
-          this.el.addEventListener('materialtextureloaded', allLoaded);
-         
-         function allLoaded(){
-         numLoaded++;
-            if(numLoaded == 2){
-            console.log("model mesh and texture are loaded");
-          
-              const obj = el.getObject3D("mesh");
-              obj.traverse(node => {
-                if (node.name.indexOf("model") !== -1) {
-                  //models has to be named "model" !!!
-                  node.material.color.set("rgb(100, 100, 100)");
-                  node.material.map.offset = new THREE.Vector2(0.2, 0);
-                }
-              });//end traverse node
-              
-            }//all assets loaded
-         }     
-              
-        },
+        },        
         tick: function() {
+        
+        var analyserEl =  this.data.analyserEl || this.el; //not efficient should be called once but than i cant check if new element is created...
+        if(!analyserEl){return;}
+        
+        this.analyser = analyserEl.components.audioanalyser || this.el.components.audioanalyser;
+        if(!this.analyser){return;}
 
         function map_range(value, low1, high1, low2, high2) {
             return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
@@ -54,11 +27,9 @@
             currCol = 'rgb('+mapVolume+','+mapVolume+','+mapVolume+')';
         }
        
-        
           const obj = this.el.getObject3D("mesh");
           if (obj != null) {
-          
-            this.counter++;
+
             obj.traverse(node => {
               if (node.name.indexOf("model") !== -1) {
                 if(node.material.map){

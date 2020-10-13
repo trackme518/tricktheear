@@ -45,15 +45,11 @@
         <a-scene id="VR_scene"  loading-screen="dotsColor: white; backgroundColor: black" fog="type: linear; color: #AAB; far: 35; near: 0" antialias="false" background="color: black;">
         <!-- position x= -vlevo + vpravo; y=výška + nahoru, - dolu;  z= - dopredu / + dozadu  -->                      
         <!-- pitch / yaw / roll ve skutecnosti ale yaw / pitch / roll -->           
-            
+            <a-assets id="myassets"></a-assets>
             <!--
             <a-entity position="0 2.25 -15" particle-system="preset: dust;  particleCount: 500; color: #FFE8E8, #E8FFF0"></a-entity>
             -->
-            
-             <!-- -static lights for all scenes -->                        
-             <!-- 
-            <a-entity light="type: directional; color: rgb(255,255,255); intensity: 1.0;" position="-6.0 10.0 -3.0"></a-entity>            
-            -->
+
             <a-entity light="type: ambient; color: rgb(255,255,255); intensity: 1.0;" ></a-entity>            
             
             <a-entity id="mainmenu" createmenu visible="true"></a-entity>
@@ -63,20 +59,7 @@
             <!--<a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>-->                           
             <!--< <a-entity light="type: directional; color: rgb(235,255,235); intensity: 1.0; castShadow: true;" position="-6.0 10.0 -3.0"  rotation="-90 0 0" target="#target_1" -->                           
             
-            <!-- the audio that the light should react to based on overall relative volume - provide placeholder to prevent uncaugth error in console src="audio/noise5s.ogg" 
-            audioanalyser="src: #audioreact; enableVolume: true; enableLevels: true; enableBeatDetection: true;  enableWaveform: true; beatDetectionMinVolume: 0.1; fftSize: 2048;
-            -->
-            <audio id="audioreact" crossOrigin="anonymous"></audio>
-            
-            
-            <a-entity id="sound_reactive" audioanalyser="src: #audioreact; beatDetectionThrottle: 50; enableVolume: true; enableLevels: false; enableBeatDetection: true;  enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;"></a-entity>
-            
-            <a-light id="sound_light" color="orange" type="spot" angle="45" intensity="1.0" castShadow="true" position="-20.0 50.0 -20.0"  rotation="-90 0 0" target="#target_1" 
-            audioanalyser-volume-intensity="multiplier: 0.1; analyserEl: #sound_reactive;">                                                                
-                <a-sphere radius="3.0" material="shader: flat; color: rgb(255,255,255); emissive: rgb(255,255,255); fog:false;" id="moon"></a-sphere>                                    
-            </a-light>
-            <a-entity id="target_1" position="0 0 0"></a-entity>                                          
-                                                                                                                
+                                                                                        
             <!-- placeholder for dynamically loaded models - see loadScene.js -> loadscene component -->
             <a-entity rotation="0 35 0" id="currmodels" ></a-entity>
              <!-- placeholder for dynamically loaded dressing components see loadscene component -->
