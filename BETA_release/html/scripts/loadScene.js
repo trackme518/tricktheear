@@ -116,7 +116,8 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
       case 3://bratri
         //document.getElementById('VR_scene').removeAttribute('fog');
         document.getElementById('VR_scene').setAttribute('fog','type: linear; color: black; far: 30; near: 0');
-        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=images/glitch512bw.jpg', 'material=repeat: 20 20;','rotation=-90 0 0'], 'a-plane', null);
+        addEntity(myAssets, ['src=images/glitch512bw.jpg','id=tex_floor'], 'img', null);
+        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=#tex_floor', 'material=repeat: 20 20;','rotation=-90 0 0'], 'a-plane', null);
         //add light reacting to first music track
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
         addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
