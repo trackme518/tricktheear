@@ -23,7 +23,7 @@
             //var mapVolume =  Math.min(Math.max(parseInt(volume*100), 0), 500) ; //constrain number between 0-500
             var mapVolume =  Math.min(Math.max(volume, 0), 5) ;
             //console.log(mapVolume);
-            mapVolume = parseInt( map_range(volume, 0, 5, 0, 255) );
+            mapVolume = parseInt( map_range(volume, 0, 5, 0, 50) );  //volume, 0, 5, 0, 255
             currCol = 'rgb('+mapVolume+','+mapVolume+','+mapVolume+')';
         }
        

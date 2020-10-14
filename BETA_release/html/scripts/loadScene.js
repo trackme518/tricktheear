@@ -52,7 +52,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
     scenes.push( new vrScene( 2, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/ian/noise0.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
     //scenes.push( new vrScene( 3, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/lakomstvi.glb', 'models/pile.glb', 'models/pomluva.glb', 'models/stridmost.glb'],['audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg', 'audio/bratri/stridmost.ogg'] )  );
-    scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost.obj', 'models/bratri/lakomstvi.obj', 'models/bratri/pile.obj', 'models/bratri/pomluva.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
+    scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
@@ -78,22 +78,22 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
       addEntity(myAssets, ['src=images/symbols.jpg','id=tex_symbols'], 'img', null);
       addEntity(myAssets, ['src=images/strip.jpg','id=tex_strip'], 'img', null);
            
-       switch(i) {
+       switch(i) {                                                                                                                                //'obj-model=obj: '+scenes[currScene].modSrc[i]+';' //gltf-model=models/deco/skeleton.glb //'material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;'
         case 0:                                                                                                                                                                                                                                                                                                                                                                                                                                                    //analyserEl: #sound_reactive1;
-          addEntity(scenemodels,  ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_circle ; color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat','color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels,  ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_lines ; color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat','color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         case 1:
-          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_lines; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_circle; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         case 2:
-          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         default:
-          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:true', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_strip; color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model',setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_strip; color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials'], 'a-entity', null );
         }
      
-      }else{
-        addEntity(scenemodels, ['class=model','id='+currId,'scale='+scenes[currScene].modScale[i],'material=color: #000000','shadow=cast: true', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null ); 
+      }else{                                                                                     //,'material=color: #000000'
+        addEntity(scenemodels, ['class=model', setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null ); 
       }
 
     }//end load models      
@@ -111,16 +111,16 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         
         //add light reacting to first music track
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
-        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
+        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=false', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
         break;
       case 3://bratri
         //document.getElementById('VR_scene').removeAttribute('fog');
         document.getElementById('VR_scene').setAttribute('fog','type: linear; color: black; far: 30; near: 0');
         addEntity(myAssets, ['src=images/glitch512bw.jpg','id=tex_floor'], 'img', null);
-        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=#tex_floor', 'material=repeat: 20 20;','rotation=-90 0 0'], 'a-plane', null);
+        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=#tex_floor', 'material=repeat: 20 20;', 'shadow=receive: false;', 'rotation=-90 0 0'], 'a-plane', null);
         //add light reacting to first music track
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
-        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
+        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model1;'], 'a-light', null);
         break;
       default:
         // code block

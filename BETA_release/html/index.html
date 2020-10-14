@@ -27,7 +27,11 @@
 <script src="https://unpkg.com/aframe-ambisonic-component"></script>
  -->
  
-<script src="./event_set_component_412.js"></script>  <!-- enable mouse to act as cursor on desktop --> 
+<script src="./event_set_component_412.js"></script>  <!-- enable mouse to act as cursor on desktop -->
+
+<!-- move along path -->
+<script src="https://rawgit.com/protyze/aframe-curve-component/master/dist/aframe-curve-component.min.js"></script> 
+<script src="https://rawgit.com/protyze/aframe-alongpath-component/master/dist/aframe-alongpath-component.min.js"></script> 
              
     </head>    
     <body>          
@@ -45,6 +49,14 @@
         <a-scene id="VR_scene"  loading-screen="dotsColor: white; backgroundColor: black" fog="type: linear; color: #AAB; far: 35; near: 0" antialias="false" background="color: black;">
         <!-- position x= -vlevo + vpravo; y=výška + nahoru, - dolu;  z= - dopredu / + dozadu  -->                      
         <!-- pitch / yaw / roll ve skutecnosti ale yaw / pitch / roll -->           
+            <a-curve closed="true" id="track1">
+              <a-curve-point position="0 0 0"></a-curve-point>
+              <a-curve-point position="0 1 -3"></a-curve-point>
+              <a-curve-point position="2 2 -3"></a-curve-point>
+              <a-curve-point position="0 0 0"></a-curve-point>
+            </a-curve>
+            
+            
             <a-assets id="myassets"></a-assets>
             <!--
             <a-entity position="0 2.25 -15" particle-system="preset: dust;  particleCount: 500; color: #FFE8E8, #E8FFF0"></a-entity>
@@ -76,7 +88,9 @@
             </a-entity>                                      
             
             <!-- enable wasd / arrows control on desktop -->                                  
-            <a-camera far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                          
+            <a-draw-curve curveref="#track1" material="shader: line; color: blue;"></a-draw-curve>
+            
+            <a-camera alongpath="curve: #track1; dur: 5000; rotate: true; resetonplay: false;" far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                          
                 <!-- Text element for display messaging.  Hide once audio is playing. -->  	                 
                 
                <a-box  id="fade" color="black" height="2" width="2" depth="2" position="0 0 0" transparent="true" material="opacity: 0.0; shader: flat; side: back;"
