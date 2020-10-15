@@ -96,7 +96,7 @@
             </a-entity id="camera_rig" position="0 0 0"> <!-- camera rig start-->
             
             <!-- use rotation-reader to log camera movement and rotation -->          
-            <a-camera rotation-reader="ip: ws://10.0.0.18:8025/track;" far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                          
+            <a-camera rotation-reader="ip: ws://10.0.0.18:8025/track; position: true, rotation: true; interval: 100;" far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                          
                 <!-- Text element for display messaging.  Hide once audio is playing. -->  	                 
                 
                <a-box  id="fade" color="black" height="2" width="2" depth="2" position="0 0 0" transparent="true" material="opacity: 0.0; shader: flat; side: back;"
