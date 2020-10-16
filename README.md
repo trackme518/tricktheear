@@ -25,3 +25,10 @@ To recieve the data and log the in text file you need another app. It can also b
 ```
 
 All values are split by delimeter ";". First three values are x,y,z component of position and another three are x,y,z components of rotation. The last parameter is a timestamp in miliseconds since the program started. 
+
+If you are on windows64bit you can simply just downlaod latest build of our reciever and run logVR.exe - no installation is needed:
+
+https://github.com/trackme518/tricktheear/tree/master/logVR/BUILD
+
+You can start recording the incoming data by pressing "r" on keyboard. You will end recording by pressing "r" again. Data will be saved in data folder with current date in the file name. 
+
