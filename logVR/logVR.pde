@@ -6,6 +6,7 @@ WebsocketServer ws;
 
 PVector position = new PVector(0, 0, 0);
 PVector rotation = new PVector(0, 0, 0);
+PVector bounds = new PVector(720, 720); //heatmap bounds
 
 PShape user;
 int step = 40;
@@ -14,12 +15,21 @@ int gridSize = 640;
 PrintWriter output;
 boolean recording = false;
 
+PGraphics heatmap;
+
 void setup() {
-  size(1080, 1080, P3D);
+  size(720, 720, P3D);
   cam = new PeasyCam(this, 400);
   lights();
   ws= new WebsocketServer(this, 8025, "/track");
   user = loadShape("unicorn3.obj");
+
+  heatmap = createGraphics( int(bounds.x), int(bounds.y), P2D);
+  heatmap.beginDraw();
+  heatmap.noStroke();
+  heatmap.blendMode(ADD);
+  heatmap.background(0);
+  heatmap.endDraw();
 }
 
 void draw() {
@@ -53,6 +63,25 @@ void draw() {
   scale(5.0);
   shape(user, 0, 0);
   popMatrix();
+
+  if (recording) { //record data to image as well
+    heatmap.beginDraw();
+    heatmap.blendMode(ADD);
+    color c = heatmap.get(int(position.x*100), int(position.z*100) );  
+
+    if (blue(c)<255) {
+      heatmap.fill(0, 0, 1);
+    } else if (green(c)<255) {
+      heatmap.fill(0, 1, 0);
+    } else {
+      heatmap.fill(1, 0, 0);
+    }
+
+    //heatmap.fill(255);
+    heatmap.circle( bounds.x/2 + position.x*20, bounds.y/2 + position.z*20, 10);
+    heatmap.endDraw();
+  }
+  //image(heatmap,0,0);
 }
 
 void webSocketServerEvent(String msg) {
@@ -60,6 +89,7 @@ void webSocketServerEvent(String msg) {
   String[] list = split(msg, ';');
   if (list.length > 5) {
     position = new PVector( float(list[0]), float(list[1]), float(list[2]) );
+
     rotation = new PVector( float(list[3]), float(list[4]), float(list[5]) );
     if (recording) {
       output.println(msg); // Write the coordinates to the file
@@ -78,7 +108,11 @@ void keyPressed() {
       println("recording ended");
       output.flush(); // Writes the remaining data to the file
       output.close(); // Finishes the file
+      //save heatmap as jpg in data folder
+      heatmap.save( dataPath( "heatmap"+year()+"_"+month()+"_"+day()+"_"+minute()+"_"+second()+".jpg" ) );
+      heatmap.beginDraw();
+      heatmap.background(0); //reset heatmap buffer image
+      heatmap.endDraw();
     }
   }
-  
 }
