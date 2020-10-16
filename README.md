@@ -3,7 +3,7 @@ Music in VR implemented in A-frame framework
 
 More information at: https://tricktheear.eu/download/
 
-If you are just for Camera logging component for tracking user movement and rotation in VR and sending the data over websocket you can use it like this:
+If you are here for Camera logging component for tracking user movement and rotation in VR and sending the data over websocket you can use it like this:
 
 ```html
 <html>
