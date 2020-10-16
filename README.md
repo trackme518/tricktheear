@@ -30,5 +30,5 @@ If you are on windows64bit you can simply just downlaod latest build of our reci
 
 https://github.com/trackme518/tricktheear/tree/master/logVR/BUILD
 
-You can start recording the incoming data by pressing "r" on keyboard. You will end recording by pressing "r" again. Data will be saved in data folder with current date in the file name. 
+You can start recording the incoming data by pressing "r" on keyboard. You will end recording by pressing "r" again. Data will be saved in data folder with current date in the file name. We have also added heatmap image as an output - it is generated automatically when recording.
 
