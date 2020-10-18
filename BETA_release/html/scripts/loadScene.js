@@ -50,7 +50,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     //0=sasa 1=gary 2=ian 3=bratri 
     scenes.push( new vrScene( 0, 13,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost4.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost4.glb'],['audio/sasa/Kontrabas.ogg', 'audio/sasa/Saxofon.ogg', 'audio/sasa/Trombon.ogg', 'audio/sasa/Violoncello.ogg'] )  );
     scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
-    scenes.push( new vrScene( 2, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/ian/noise0.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
+    scenes.push( new vrScene( 2, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/ian/nadeje6ksmalltex.glb', 'models/ian/vira7ksmalltex.glb', 'models/laska.glb', 'models/laska.glb'],['audio/sasa/Kontrabas.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
     //scenes.push( new vrScene( 3, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/lakomstvi.glb', 'models/pile.glb', 'models/pomluva.glb', 'models/stridmost.glb'],['audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg', 'audio/bratri/stridmost.ogg'] )  );
     scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
@@ -113,6 +113,15 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
         addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=false', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
         break;
+      case 2: //ian
+        document.getElementById('VR_scene').setAttribute('fog','type: linear; color: #AAB; far: 15; near: 0');
+        document.getElementById('VR_scene').setAttribute('background','color: #AAB');
+        addEntity(decoEl, ['gltf-model=models/deco/car.glb','id=car','rotation=0.0 45.0 0.0','position=0.0 0.0 10.0','scale=0.5 0.5 0.5', 'shadow=cast:true'], 'a-entity', null);
+        addEntity(decoEl, ['gltf-model=models/deco/panelak.glb','id=panelak','position=0.0 0.0 -20.0','scale=1.0 1.0 1.0', 'shadow=cast:true'], 'a-entity', null);
+        addEntity(myAssets, ['src=images/concrete_floor_diff_1k.jpg','id=tex_floor'], 'img', null);
+        addEntity(myAssets, ['src=images/concrete_floor_Nor_1k.jpg','id=tex_floor_n'], 'img', null);
+        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=#tex_floor', 'material=repeat: 20 20; normalMap: #tex_floor_n', 'shadow=receive: false;', 'rotation=-90 0 0'], 'a-plane', null);
+        break;  
       case 3://bratri
         //document.getElementById('VR_scene').removeAttribute('fog');
         document.getElementById('VR_scene').setAttribute('fog','type: linear; color: black; far: 30; near: 0');

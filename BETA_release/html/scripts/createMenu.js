@@ -11,6 +11,10 @@ AFRAME.registerComponent('createmenu', {
      myNode = document.getElementById('scenedeco');
      myNode.innerHTML = '';
     //------------------------------------------
+     document.getElementById('VR_scene').setAttribute('background','color: #000');
+     document.getElementById('VR_scene').removeAttribute("fog");
+     //document.getElementById('VR_scene').setAttribute('fog','false;');
+    //-------------------------------------------------
 
     var r = 3;
     for(var i = 0; i < content.length; i++) {
