@@ -2,7 +2,7 @@
 AFRAME.registerComponent('createmenu', {  
   init:function() {
 
-    content = ["EXPERIMENT\nAlexandra Cihanska Machova", "CLASSIC\nGary Rushton", "EXPERIMENT  Ian Mykiska", "TECHNO\nBratri", "JAZZ\nJirka Svestka", "NOISE\nHonza Vrchlicky"];  
+    content = ["EXPERIMENT\nAlexandra Cihanska Machova", "CLASSIC\nGary Rushton", "EXPERIMENT  Ian Mykiska", "TECHNO\nBratri", "CINEMATIC\nSusanne Hardt", "NOISE\nComing soon"];  
 
     //this completely removes previously loaded models--------------
      var myNode = document.getElementById("currmodels");
@@ -34,7 +34,11 @@ AFRAME.registerComponent('createmenu', {
         
         clickArea = document.createElement('a-plane'); //create clickable invisible plane to act as button (otherwise it might be hard to click on text shapes...)
         clickArea.setAttribute('loadscene', 'id: '+i+';' ); 
+        
+        if(i==0 || i==3){ //enable only finished scenes
         clickArea.setAttribute('class', 'clickable' );
+        }
+        
         clickArea.setAttribute('height', '2' ); 
         clickArea.setAttribute('width', '2' ); 
         clickArea.setAttribute('visible', 'false' ); 

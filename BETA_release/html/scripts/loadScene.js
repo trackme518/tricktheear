@@ -46,13 +46,17 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     this.modId = modId;
     this.assetCount = assetCount;
     }
+    
     //creating new instances of scene object
-    //0=sasa 1=gary 2=ian 3=bratri 
     scenes.push( new vrScene( 0, 13,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost.glb'],['audio/sasa/Kontrabas.ogg', 'audio/sasa/Saxofon.ogg', 'audio/sasa/Trombon.ogg', 'audio/sasa/Violoncello.ogg'] )  );
+    //1=gary
     scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
+    //2=ian
     scenes.push( new vrScene( 2, 10,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/ian/nadeje6k.glb', 'models/ian/vira7ksmalltex.glb', 'models/ian/lenost.glb', 'models/laska.glb'],['audio/sasa/Kontrabas.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
-    //scenes.push( new vrScene( 3, 8, ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/lakomstvi.glb', 'models/pile.glb', 'models/pomluva.glb', 'models/stridmost.glb'],['audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg', 'audio/bratri/stridmost.ogg'] )  );
+    //3=bratri
     scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
+    //4=sussanne
+    scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sussanne/podvod.glb', 'models/sussanne/uprimnost.glb', 'models/sussanne/zavist.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
