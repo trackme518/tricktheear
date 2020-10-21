@@ -35,9 +35,9 @@ AFRAME.registerComponent('createmenu', {
         clickArea = document.createElement('a-plane'); //create clickable invisible plane to act as button (otherwise it might be hard to click on text shapes...)
         clickArea.setAttribute('loadscene', 'id: '+i+';' ); 
         
-        if(i==0 || i==3){ //enable only finished scenes
+        //if(i==0 || i==3){ //enable only finished scenes
         clickArea.setAttribute('class', 'clickable' );
-        }
+        //}
         
         clickArea.setAttribute('height', '2' ); 
         clickArea.setAttribute('width', '2' ); 
