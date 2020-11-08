@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <title>Volume</title>
+
+    <script src="scripts/aframe104.js"></script>
+    <script src="scripts/aframe-audioanalyser-component.js"></script>
+    <script src="lipsync.js"></script>
+  </head>
+  <body>
+    <a-scene antialias="true">
+      <a-assets id="myassets">
+        <audio id="song" crossorigin src="audio_export_lipsync.mp3"></audio>
+        <img id="floor" src="https://cdn.aframe.io/a-painter/images/floor.jpg" crossOrigin="anonymous">
+        <img id="skymap" src="https://cdn.aframe.io/a-painter/images/sky.jpg" crossOrigin="anonymous">
+      </a-assets>
+        <!-- geometry="primitive: box; depth: 2; height: 5; width: 3.5"  #510710
+         position="0 0 -5.25"
+         
+        -->
+        
+          <!-- Audio analyser. -->
+      <a-entity id="analyser"
+        audioanalyser="src: #song"
+        audioanalyser-waveform="radius: 0.5"
+        rotation="90 0 0"
+        position="0 30 0"
+      ></a-entity>
+      
+        
+     <a-entity id="container" position="0 0 0" rotation="0 180 0">
+        <a-entity id="andy"
+        geometry="primitive: box; depth: 2; height: 5; width: 3.5"
+        material="color: #510710"
+        position="0 0 -5.25"
+      ></a-entity>
+      <a-sphere id="leftEyeball" position="-1 2 -4" radius="0.5"></a-sphere>
+      <a-sphere id="rightEyeball" position="1 2 -4" radius="0.5"></a-sphere>
+      <a-sphere id="leftEye" color="black" position="-1 2 -3.5" radius="0.1"></a-sphere>
+      <a-sphere id="rightEye" color="black" position="1 2 -3.5" radius="0.1"></a-sphere>
+      <a-sphere id="mouth"
+        color="#000"
+        
+        audioanalyser-volume-scale="multiplier: .008; analyserEl: #analyser;"
+        position="0 1 -4"
+        side="double"
+        shader="flat"
+      ></a-sphere>
+    </a-entity>
+        
+        
+      <a-entity id="cindy"
+       geometry="primitive: sphere; radius: 2.3;" 
+        material="color: #0033cc"
+        position="0 2 -6"
+      ></a-entity>
+      <a-sphere id="leftEyeball" position="-1 2 -4" radius="0.5"></a-sphere>
+      <a-sphere id="rightEyeball" position="1 2 -4" radius="0.5"></a-sphere>
+      <a-sphere id="leftEye" color="black" position="-1 2 -3.5" radius="0.1"></a-sphere>
+      <a-sphere id="rightEye" color="black" position="1 2 -3.5" radius="0.1"></a-sphere>
+      <a-sphere id="mouth"
+        color="#000"
+      
+        audioanalyser-volume-scale="multiplier: .008; analyserEl: #analyser;"
+        position="0 1 -4"
+        side="double"
+        shader="flat"
+      ></a-sphere>
+
+      <a-light type="ambient" color="#222"></a-light>
+      <a-light type="point" position="1 2 1"></a-light>
+      <a-light type="point" position="-2 2 1"></a-light>
+      <a-entity id="sky"
+        geometry="primitive: sphere; radius: 11; phiLength: 360; phiStart: 0; thetaLength: 90"
+        material="shader: flat; side: back; height: 2048; src: #skymap; width: 2048"
+      ></a-entity>
+      <a-entity id="ground"
+        geometry="primitive: circle; radius: 12;"
+        rotation="-90 0 0"
+        material="shader: flat; src: #floor"
+      ></a-entity>
+    </a-scene>
+
+   <script>
+   var myaudio = document.getElementById("myassets");
+    myaudio.addEventListener( 'loaded', checkLoaded );
+    
+    function checkLoaded(){
+    console.log("jop");
+    var myaudio = document.getElementById("song");
+    myaudio.play();
+    }
+   </script>
+  </body>
+</html>
