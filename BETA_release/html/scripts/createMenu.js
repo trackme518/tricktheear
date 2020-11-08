@@ -2,7 +2,7 @@
 AFRAME.registerComponent('createmenu', {  
   init:function() {
 
-    content = ["EXPERIMENT\nAlexandra Cihanska Machova", "CLASSIC\nGary Rushton", "EXPERIMENT  Ian Mykiska", "TECHNO\nBratri", "CINEMATIC\nSusanne Hardt", "NOISE\nComing soon"];  
+    content = ["EXPERIMENT\nAlexandra Cihanska Machova", "CLASSIC\nGary Rushton", "EXPERIMENT  Ian Mykiska", "TECHNO\nBratri", "CINEMATIC\nSusanne Hardt", "?\nComing soon"];  
 
     //this completely removes previously loaded models--------------
      var myNode = document.getElementById("currmodels");
@@ -26,8 +26,7 @@ AFRAME.registerComponent('createmenu', {
     
         entity = document.createElement('a-entity');
         entity.setAttribute('position', x+' 2 '+y ); 
-        currFont = 'font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: '+content[i]+'; align: center; color: white; wrapCount: 12; width: 2;';
-        entity.setAttribute('text', currFont );
+        
         entity.setAttribute('look-at', '#center' ); //using lookAt component! you can also use look-at="[camera]" to always face player - ie billboard   
         //console.log(entity);  
         document.querySelector("#mainmenu").append(entity);
@@ -35,9 +34,13 @@ AFRAME.registerComponent('createmenu', {
         clickArea = document.createElement('a-plane'); //create clickable invisible plane to act as button (otherwise it might be hard to click on text shapes...)
         clickArea.setAttribute('loadscene', 'id: '+i+';' ); 
         
-        //if(i==0 || i==3){ //enable only finished scenes
-        clickArea.setAttribute('class', 'clickable' );
-        //}
+        if(i==0 || i==2 || i==3){ //enable only finished scenes
+            clickArea.setAttribute('class', 'clickable' );
+            currFont = 'font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: '+content[i]+'; align: center; color: white; wrapCount: 12; width: 2;';
+        }else{
+            currFont = 'font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: '+content[i]+'; align: center; color: grey; wrapCount: 12; width: 2;'; 
+        }
+        entity.setAttribute('text', currFont );
         
         clickArea.setAttribute('height', '2' ); 
         clickArea.setAttribute('width', '2' ); 

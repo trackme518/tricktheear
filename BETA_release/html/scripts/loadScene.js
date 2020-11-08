@@ -48,15 +48,15 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     }
     
     //creating new instances of scene object
-    scenes.push( new vrScene( 0, 13,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost.glb'],['audio/sasa/Kontrabas.ogg', 'audio/sasa/Saxofon.ogg', 'audio/sasa/Trombon.ogg', 'audio/sasa/Violoncello.ogg'] )  );
+    scenes.push( new vrScene( 0, 15,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost.glb'],['audio/sasa/trpelivost.ogg', 'audio/sasa/lehkomyslnost.ogg', 'audio/sasa/laska.ogg', 'audio/sasa/lstivost.ogg'] )  );
     //1=gary
-    scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
+    scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/cello.ogg', 'audio/gary/viola.ogg', 'audio/gary/violin.ogg', 'audio/gary/violin2.ogg'] )  );
     //2=ian
-    scenes.push( new vrScene( 2, 10,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/ian/nadeje6k.glb', 'models/ian/vira7ksmalltex.glb', 'models/ian/lenost.glb', 'models/laska.glb'],['audio/sasa/Kontrabas.ogg', 'audio/ian/noise1.ogg', 'audio/ian/noise2.ogg', 'audio/ian/noise3.ogg'] )  );
+    scenes.push( new vrScene( 2, 10,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/ian/nadeje6k.glb', 'models/ian/lenost.glb',  'models/ian/vira7ksmalltex.glb', 'models/laska.glb'],['audio/ian/RB.ogg', 'audio/ian/LB.ogg', 'audio/ian/LF.ogg', 'audio/ian/RF.ogg'] )  );
     //3=bratri
     scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //4=sussanne
-    scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sussanne/podvod.glb', 'models/sussanne/uprimnost.glb', 'models/sussanne/zavist.glb', 'models/laska.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
+    scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sussanne/podvod.glb', 'models/sussanne/uprimnost.glb', 'models/sussanne/zavist.glb', 'models/sussanne/moudrost.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
@@ -76,7 +76,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
       var setAnalyser = 'audioanalyser=src: #'+thisAudio+';  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;';
       
       //scene specific code-----------------
-      if( scenes[currScene].modId == 3){
+      if( scenes[currScene].modId == 3){ //BRATRI
       addEntity(myAssets, ['src=images/circle.jpg','id=tex_circle'], 'img', null);
       addEntity(myAssets, ['src=images/lines.jpg','id=tex_lines'], 'img', null);
       addEntity(myAssets, ['src=images/symbols.jpg','id=tex_symbols'], 'img', null);
@@ -111,12 +111,14 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         //a-ocean-plane
         addEntity(myAssets, ['src=images/waternormals.jpg','id=waternorm'], 'img', null);//waternormals.jpg
         addEntity(myAssets, ['src=images/water_tex.jpg','id=watertex'], 'img', null);
-        addEntity(decoEl, ['id=scene_floor', 'wobble-normal', 'rotation=-90 0 0', 'width=10000', 'height=10000', 'material=color: #000000; transparent: true; metalness: 1; roughness: 0.2; normalMap: #waternorm; sphericalEnvMap: #watertex; normalTextureRepeat: 50 50; normalTextureOffset: 0 0; normalScale: 0.5 0.5; opacity: 0.8; shader: standard;' ], 'a-plane', null);
-        
+        addEntity(decoEl, ['id=scene_floor', 'wobble-normal', 'rotation=-90 0 0', 'width=10000', 'height=10000', 'material=color: #000000; transparent: true; metalness: 1; roughness: 0.2; normalMap: #waternorm; sphericalEnvMap: #watertex; normalTextureRepeat: 50 50; normalTextureOffset: 0 0; normalScale: 0.5 0.5; opacity: 0.8; shader: standard;' ], 'a-plane', null);      
         //add light reacting to first music track
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
         addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=false', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model0;'], 'a-light', null);
-        break;
+        //add another track for ambient with no spatiality :-/ bummer
+        addEntity(myAssets, ['src=audio/sasa/ambient.ogg','id=ambient'], 'audio', null);//add source to assets to load immedietly
+        addEntity(myAssets, ['sound=src: #ambient; volume: 0.1; autoplay: false; positional: false;','id=ambientTrack'], 'a-entity', null);//add entity to start playback
+       break;
       case 2: //ian
         document.getElementById('VR_scene').setAttribute('fog','type: linear; color: #AAB; far: 15; near: 0');
         document.getElementById('VR_scene').setAttribute('background','color: #AAB');
@@ -126,13 +128,10 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         //addEntity(decoEl, ['gltf-model=models/deco/panelak.glb','id=panelak','position=0.0 0.0 -20.0','scale=1.0 1.0 1.0', 'shadow=cast:true'], 'a-entity', null);
         addEntity(myAssets, ['src=images/concrete_floor_diff_1k.jpg','id=tex_floor'], 'img', null);
         addEntity(myAssets, ['src=images/concrete_floor_Nor_1k.jpg','id=tex_floor_n'], 'img', null);
-        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=#tex_floor', 'material=repeat: 20 20; normalMap: #tex_floor_n', 'shadow=receive: false;', 'rotation=-90 0 0'], 'a-plane', null);
-        
+        addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=#tex_floor', 'material=repeat: 20 20; normalMap: #tex_floor_n', 'shadow=receive: false;', 'rotation=-90 0 0'], 'a-plane', null);       
          //add light reacting to first music track
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
         addEntity(decoEl, ['id=sound_light','color=white','type=spot','angle=45', 'intensity=1.0', 'castShadow=false', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1'], 'a-light', null);
-       
-       
         break;  
       case 3://bratri
         //document.getElementById('VR_scene').removeAttribute('fog');
@@ -223,13 +222,21 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
       
         //------------------------------------------------------------------------
       //function checkLoaded(whatEle, typeEle){
+       var ambientEnable = false;//check if we have besides positional audio also flat stereo audio for the scene
+      
       function checkLoaded(){  
       //not that sound-loaded event will fire only once per resource even it it is attached to multiple entities - therefore it wont trigger if you would have 4entities with same src for sound component
       //we have different sound for every entitiy so it is ok  
+       
        if( event.type === 'loaded' || event.type === 'sound-loaded' || event.type === 'materialtextureloaded'){
          numLoaded++;
          event.target.removeEventListener(event.type, checkLoaded);
-        getCurrTime(event.target.id, numLoaded+'/'+scenes[currScene].assetCount+' '+event.type+' finished'); //log current time in console
+         getCurrTime(event.target.id, numLoaded+'/'+scenes[currScene].assetCount+' '+event.type+' finished'); //log current time in console
+            
+            if(event.target.id == 'ambientTrack'){
+                ambientEnable = true;
+                console.log('ambient music track present');
+            }
        }
        
        //console.log(event.target.id+' loaded '+numLoaded+' out of '+scenes[currScene].assetCount+' type: '+ event.type ); //debug
@@ -243,6 +250,12 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
             //var webaudio = document.getElementById('audioreact0');  //start <audio> - first track hooked to non spatial audio tag
             //webaudio.volume = 0.01; //set almost inaudible volume -> audio analyser needs basic non spatial audio source
             //webaudio.play(); //start the non spatial audio playback - analyser will react with light intensity to it
+            
+            if(ambientEnable){
+              var ambientTrack = document.getElementById('ambientTrack');
+              ambientTrack.components.sound.playSound();
+              console.log('ambient audio started');
+            }
            
             for (x = 0; x < 4; x++) {
                 if(loadedModels.length>3){
@@ -254,6 +267,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
                 }
            }//end for all models
          console.log('webaudio playback started');   
+         ambientEnable = false; //reset
            
         loadedModels = []; //reset array with loaded entities
         }//end all four models loaded
