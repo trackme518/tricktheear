@@ -48,15 +48,16 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     }
     
     //creating new instances of scene object
+    //0=sasa
     scenes.push( new vrScene( 0, 15,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost.glb'],['audio/sasa/trpelivost.ogg', 'audio/sasa/lehkomyslnost.ogg', 'audio/sasa/laska.ogg', 'audio/sasa/lstivost.ogg'] )  );
     //1=gary
     scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/laska.glb', 'models/lenost.glb', 'models/laska.glb', 'models/laska.glb'],['audio/gary/cello.ogg', 'audio/gary/viola.ogg', 'audio/gary/violin.ogg', 'audio/gary/violin2.ogg'] )  );
     //2=ian
-    scenes.push( new vrScene( 2, 10,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/ian/nadeje6k.glb', 'models/ian/lenost.glb',  'models/ian/vira7ksmalltex.glb', 'models/laska.glb'],['audio/ian/RB.ogg', 'audio/ian/LB.ogg', 'audio/ian/LF.ogg', 'audio/ian/RF.ogg'] )  );
+    scenes.push( new vrScene( 2, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/ian/nadeje6k.glb', 'models/ian/lenost.glb',  'models/ian/vira7ksmalltex.glb', 'models/laska.glb'],['audio/ian/RB.ogg', 'audio/ian/LB.ogg', 'audio/ian/LF.ogg', 'audio/ian/RF.ogg'] )  );
     //3=bratri
     scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //4=sussanne
-    scenes.push( new vrScene( 1, 8,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sussanne/podvod.glb', 'models/sussanne/uprimnost.glb', 'models/sussanne/zavist.glb', 'models/sussanne/moudrost.glb'],['audio/gary/click1.ogg', 'audio/gary/click2.ogg', 'audio/gary/click3.ogg', 'audio/gary/click4.ogg'] )  );
+    scenes.push( new vrScene( 4, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/susanne/podvod.glb', 'models/susanne/uprimnost.glb', 'models/susanne/zavist.glb', 'models/susanne/moudrost.glb'],['audio/susanne/test11.ogg', 'audio/susanne/test22.ogg', 'audio/susanne/test33.ogg', 'audio/susanne/test44.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
@@ -142,8 +143,20 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
         addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model1;'], 'a-light', null);
         break;
+      case 4://susanne        
+        document.getElementById('VR_scene').setAttribute('fog','type: linear; color: #AAB; far: 65; near: 0');
+        document.getElementById('VR_scene').setAttribute('background','color: #AAB');
+        
+        addEntity(decoEl, ['gltf-model=models/deco/susanne_scene3.glb','id=city','position=0.0 0.0 0.0','scale=0.5 0.5 0.5', 'shadow=cast:true; receive: true;'], 'a-entity', null);
+        //default directional light
+        addEntity(decoEl, ['id=lightDefault','color=white','type=directional', 'intensity=0.4', 'castShadow=true', 'position=-5 3 1.5'], 'a-light', null);           
+        //add light reacting to first music track
+        addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
+        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model1;'], 'a-light', null);
+        break;
       default:
         // code block
+        break;
     }
     //-----------------------------------------------------------------------------------
     //settign attributes to entities so repeptitive so I wrote a function to do it for me: 
@@ -276,6 +289,13 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     function createMenu(){
     musicEnded++;
       if(musicEnded==4){ //all tracks ended playing
+         /*
+         //I should somehow porbably close the audi source - not audio element, but dunno how, also watch out for that damm ambient track...
+         for (x = 0; x < 4; x++) {
+            var currAudioSrc = document.getElementById('audioreact'+x);
+            currAudioSrc.stop();
+        } 
+        */
           console.log('All audio tracks finished. Creating menu scene...');
           document.getElementById('fade').emit('fadeout'); //start blackOut
           document.getElementById('fade').addEventListener( 'animationcomplete', buildNewMenu ); //once the black out finishes start to load the scene!

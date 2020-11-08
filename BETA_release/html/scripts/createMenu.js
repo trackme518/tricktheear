@@ -4,12 +4,19 @@ AFRAME.registerComponent('createmenu', {
 
     content = ["EXPERIMENT\nAlexandra Cihanska Machova", "CLASSIC\nGary Rushton", "EXPERIMENT  Ian Mykiska", "TECHNO\nBratri", "CINEMATIC\nSusanne Hardt", "?\nComing soon"];  
 
+    if( document.getElementById('cam') ){//check that camera exists - this is not the case when first loaded - in that case it is centered by parameter set at the element entity in html
+        document.getElementById('cam').setAttribute('position','0 1.6 0'); //reset camera postion to center
+        //document.getElementById('cam').setAttribute('rotation','0 0 0');//does not work!!! have to reset orientation otherwise...
+    }
     //this completely removes previously loaded models--------------
      var myNode = document.getElementById("currmodels");
      myNode.innerHTML = '';
      //delete all decorations from previous scene
      myNode = document.getElementById('scenedeco');
      myNode.innerHTML = '';
+     //delete all assets
+     document.getElementById('myassets').innerHTML = '';
+     
     //------------------------------------------
      document.getElementById('VR_scene').setAttribute('background','color: #000');
      document.getElementById('VR_scene').removeAttribute("fog");
@@ -34,7 +41,7 @@ AFRAME.registerComponent('createmenu', {
         clickArea = document.createElement('a-plane'); //create clickable invisible plane to act as button (otherwise it might be hard to click on text shapes...)
         clickArea.setAttribute('loadscene', 'id: '+i+';' ); 
         
-        if(i==0 || i==2 || i==3){ //enable only finished scenes
+        if(i==0 || i==2 || i==3 || i==4) { //enable only finished scenes
             clickArea.setAttribute('class', 'clickable' );
             currFont = 'font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: '+content[i]+'; align: center; color: white; wrapCount: 12; width: 2;';
         }else{
