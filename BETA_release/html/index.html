@@ -12,6 +12,8 @@
 <script src="scripts/lookAt.js"></script> <!-- lookAt component - orient object  to face other object https://unpkg.com/browse/aframe-look-at-component@0.8.0/ -->
 <script src="scripts/modify_mat.js"></script>
 
+<script src="scripts/enviroment.js"></script>
+
 <script src="./scripts/createMenu.js"></script>     
 <script src="./scripts/loadScene.js"></script>                
 <!-- enable mouse to act as cursor on desktop -->              
@@ -73,9 +75,10 @@
             <!--<a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>-->                           
             <!--< <a-entity light="type: directional; color: rgb(235,255,235); intensity: 1.0; castShadow: true;" position="-6.0 10.0 -3.0"  rotation="-90 0 0" target="#target_1" -->                           
             
-                                                                                        
-            <!-- placeholder for dynamically loaded models - see loadScene.js -> loadscene component -->
+                                   
+            <!-- placeholder for dynamically loaded models - see loadScene.js ->  rotation="0 35 0" loadscene component -->
             <a-entity rotation="0 35 0" id="currmodels" ></a-entity>
+            
              <!-- placeholder for dynamically loaded dressing components see loadscene component -->
             <a-entity id="scenedeco"></a-entity> 
                                                              
@@ -93,7 +96,7 @@
                                              
             <!--  <a-draw-curve curveref="#track1" material="shader: line; color: blue;"></a-draw-curve> -->            
             <!-- alongpath="curve: #track1; dur: 5000; rotate: true; resetonplay: false;" -->
-            </a-entity id="camera_rig" position="0 0 0"> <!-- camera rig start-->
+            <a-entity id="camera_rig" position="0 0 0"> <!-- camera rig start-->
             
             <!-- use rotation-reader to log camera movement and rotation -->          
             <a-camera rotation-reader="ip: ws://10.0.0.18:8025/track; position: true, rotation: true; interval: 100;" far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                          

@@ -9,14 +9,11 @@ AFRAME.registerComponent('createmenu', {
         //document.getElementById('cam').setAttribute('rotation','0 0 0');//does not work!!! have to reset orientation otherwise...
     }
     //this completely removes previously loaded models--------------
-     var myNode = document.getElementById("currmodels");
-     myNode.innerHTML = '';
+     document.getElementById("currmodels").innerHTML = '';   
      //delete all decorations from previous scene
-     myNode = document.getElementById('scenedeco');
-     myNode.innerHTML = '';
+     document.getElementById('scenedeco').innerHTML = '';
      //delete all assets
-     document.getElementById('myassets').innerHTML = '';
-     
+     document.getElementById('myassets').innerHTML = '';  
     //------------------------------------------
      document.getElementById('VR_scene').setAttribute('background','color: #000');
      document.getElementById('VR_scene').removeAttribute("fog");
@@ -41,7 +38,7 @@ AFRAME.registerComponent('createmenu', {
         clickArea = document.createElement('a-plane'); //create clickable invisible plane to act as button (otherwise it might be hard to click on text shapes...)
         clickArea.setAttribute('loadscene', 'id: '+i+';' ); 
         
-        if(i==0 || i==2 || i==3 || i==4) { //enable only finished scenes
+        if(i<5) { //enable only finished scenes  ||
             clickArea.setAttribute('class', 'clickable' );
             currFont = 'font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: '+content[i]+'; align: center; color: white; wrapCount: 12; width: 2;';
         }else{
