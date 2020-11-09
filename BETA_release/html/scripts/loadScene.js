@@ -42,10 +42,10 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
    console.log('selected scene: '+currScene);
      
    //scene constructor----------------------------------  
-    function vrScene (modId, assetCount, modScale, modPos, modRot, modSrc, modSound) {
+    function vrScene (modId, assetCount, modScale, modPos, modVol, modSrc, modSound) {
     this.modScale = modScale;
     this.modPos = modPos;
-    this.modRot = modRot;
+    this.modVol = modVol;
     this.modSrc = modSrc;
     this.modSound = modSound;
     this.modId = modId;
@@ -54,15 +54,15 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     
     //creating new instances of scene object
     //0=sasa
-    scenes.push( new vrScene( 0, 15,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost.glb'],['audio/sasa/trpelivost.ogg', 'audio/sasa/lehkomyslnost.ogg', 'audio/sasa/laska.ogg', 'audio/sasa/lstivost.ogg'] )  );
+    scenes.push( new vrScene( 0, 15,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['3.5', '3.5', '3.5', '3.5'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost.glb'],['audio/sasa/trpelivost.ogg', 'audio/sasa/lehkomyslnost.ogg', 'audio/sasa/laska.ogg', 'audio/sasa/lstivost.ogg'] )  );
     //1=gary
-    scenes.push( new vrScene( 1, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['-2 0 2', '-3 0 -3', '3 0 3', '2 0 -2'], ['0 0 0', '0 0 0', '0 0 0', '0 0 0'], ['models/gary/statecnost2.glb', 'models/gary/hnev2.glb', 'models/gary/pycha2.glb', 'models/gary/spravedlnost2.glb'],['audio/gary/cello.ogg', 'audio/gary/viola.ogg', 'audio/gary/violin.ogg', 'audio/gary/violin2.ogg'] )  );
+    scenes.push( new vrScene( 1, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['-2 0 2', '-3 0 -3', '3 0 3', '2 0 -2'], ['3.0', '3.5', '3.5', '3.5'], ['models/gary/statecnost2.glb', 'models/gary/hnev2.glb', 'models/gary/pycha2.glb', 'models/gary/spravedlnost2.glb'],['audio/gary/cello.ogg', 'audio/gary/viola.ogg', 'audio/gary/violin.ogg', 'audio/gary/violin2.ogg'] )  );
     //2=ian
-    scenes.push( new vrScene( 2, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/ian/nadeje6k.glb', 'models/ian/lenost.glb',  'models/ian/vira7ksmalltex.glb', 'models/laska.glb'],['audio/ian/RB.ogg', 'audio/ian/LB.ogg', 'audio/ian/LF.ogg', 'audio/ian/RF.ogg'] )  );
+    scenes.push( new vrScene( 2, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['3.5', '3.5', '3.5', '3.5'], ['models/ian/nadeje6k.glb', 'models/ian/lenost.glb',  'models/ian/vira7ksmalltex.glb', 'models/laska.glb'],['audio/ian/RB.ogg', 'audio/ian/LB.ogg', 'audio/ian/LF.ogg', 'audio/ian/RF.ogg'] )  );
     //3=bratri
-    scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
+    scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['3.5', '3.5', '3.5', '3.5'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //4=sussanne
-    scenes.push( new vrScene( 4, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['0 0 0', '0 90 0', '0 180 0', '0 270 0'], ['models/susanne/podvod.glb', 'models/susanne/uprimnost.glb', 'models/susanne/zavist.glb', 'models/susanne/moudrost.glb'],['audio/susanne/test11.ogg', 'audio/susanne/test22.ogg', 'audio/susanne/test33.ogg', 'audio/susanne/test44.ogg'] )  );
+    scenes.push( new vrScene( 4, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['3.5', '3.5', '3.5', '3.5'], ['models/susanne/podvod.glb', 'models/susanne/uprimnost.glb', 'models/susanne/zavist.glb', 'models/susanne/moudrost.glb'],['audio/susanne/test11.ogg', 'audio/susanne/test22.ogg', 'audio/susanne/test33.ogg', 'audio/susanne/test44.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
@@ -96,25 +96,23 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
            
        switch(i) {                                                                                                                                //'obj-model=obj: '+scenes[currScene].modSrc[i]+';' //gltf-model=models/deco/skeleton.glb //'material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;'
         case 0:                                                                                                                                                                                                                                                                                                                                                                                                                                                    //analyserEl: #sound_reactive1;
-          addEntity(scenemodels,  ['class=model', 'data-audioid='+thisAudio ,setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_lines ; color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat','color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels,  ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio ,setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_lines ; color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat','color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         case 1:
-          addEntity(scenemodels, ['class=model', 'data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_circle; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_circle; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         case 2:
-          addEntity(scenemodels, ['class=model', 'data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
         break;
         default:
-          addEntity(scenemodels, ['class=model', 'data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_strip; color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_strip; color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials'], 'a-entity', null );
         }
-     
       }else{
-       
-        //addEntity(currSounds, ['id=3dsound_'+thisAudio ,'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], null  );
-        //addEntity(scenemodels, ['class=model', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i]], 'a-entity', null ); 
+        //load sound from cache
+        addEntity(scenemodels, ['class=model', 'look-at=#camera_rig', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i], 'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null );      
         
-        //addEntity(scenemodels, ['class=model', 'look-at=0 0 0', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i],'rotation='+scenes[currScene].modRot[i],'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null ); 
-        addEntity(scenemodels, ['class=model', 'look-at=#camera_rig', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i], 'sound=src: #'+thisAudio+'; volume: 3.5; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null ); 
+        //load sound directly
+        //addEntity(scenemodels, ['class=model', 'look-at=#camera_rig', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i], 'sound=src: '+scenes[currScene].modSound[i]+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null );      
       
       }
 
