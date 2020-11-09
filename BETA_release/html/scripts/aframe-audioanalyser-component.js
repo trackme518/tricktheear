@@ -126,6 +126,19 @@ AFRAME.registerComponent('audioanalyser', {
 
     this.initContext();
   },
+  
+  remove: function () {
+    /*
+    console.log("garbage old audio context!");
+
+    this.source.disconnect(this.gainNode);
+    this.gainNode.disconnect(this.analyser);
+    this.analyser.disconnect(this.context.destination);
+
+    this.audio.remove();
+    //this.context.close();
+    */
+  },
 
   update: function update(oldData) {
     var analyser = this.analyser;
@@ -199,13 +212,18 @@ AFRAME.registerComponent('audioanalyser', {
   },
 
   initContext: function initContext() {
+    console.log("init analyser");
+    
     var data = this.data;
     var analyser;
     var gainNode;
-
-    this.context = new (window.webkitAudioContext || window.AudioContext)();
+    
+    if (!window.audioContext) { //if there is no audio context yet
+        console.log("new audio context created for audio analyser"); 
+        this.context = new (window.webkitAudioContext || window.AudioContext)();
+    }
     analyser = this.analyser = this.context.createAnalyser();
-    gainNode = this.gainNode = this.context.createGain();
+    gainNode = this.gainNode = this.context.createGain();   
     gainNode.connect(analyser);
     analyser.connect(this.context.destination);
     analyser.fftSize = data.fftSize;
@@ -215,6 +233,7 @@ AFRAME.registerComponent('audioanalyser', {
   },
 
   refreshSource: function refreshSource() {
+  console.log("source refreshed");
     var _this = this;
 
     var analyser = this.analyser;
@@ -226,7 +245,13 @@ AFRAME.registerComponent('audioanalyser', {
         _this.source.connect(_this.gainNode);
       });
     } else {
-      this.source = this.getMediaSource();
+     
+     //!!! new code
+      //if (this.source == undefined) {//only when the source is NaN
+        this.source = this.getMediaSource();
+      //}
+      
+      //!!here we have error on replay when the component was scraped in the meantime
       this.source.connect(this.gainNode);
     }
   },

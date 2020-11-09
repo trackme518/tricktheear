@@ -1,6 +1,11 @@
   AFRAME.registerComponent('modify-materials', {        
-
+        schema: {
+        analyserEl: {type: 'selector'}
+        },
+  
         init: function () {
+        var analyserEl = this.data.analyserEl || this.el;
+        
         this.counter = 0;
           // Wait for model to load.
           this.el.addEventListener('model-loaded', () => {
@@ -23,8 +28,10 @@
         
        //-----------------------
       tick: function () {
-       // var analyserEl = this.data.analyserEl || this.el;
-      var analyserEl = document.getElementById('soundReactive');
+       //var analyserEl = this.data.analyserEl || this.el;
+        //var analyserEl = this.data.analyserEl;
+        //var analyserEl = this.data.analyserEl || this.el;
+      //var analyserEl = document.getElementById('soundReactive');
       var analyserComponent;
        var volume;
        analyserComponent = analyserEl.components.audioanalyser;

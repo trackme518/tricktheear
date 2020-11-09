@@ -83,9 +83,15 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
       //var thisAudio = 'audioreact'+i+'_'+ ( parseInt(Math.random()*100) );
       var thisAudio = 'audioreact'+i+'_'+scenes[currScene].modId;
 
-      addEntity(myAssets, ['src='+scenes[currScene].modSound[i],'id='+thisAudio, 'crossorigin=anonymous'], 'audio', null);
+      if( !document.getElementById(thisAudio) ){//only add to assets if they do not exists yet
+        addEntity(myAssets, ['src='+scenes[currScene].modSound[i],'id='+thisAudio, 'crossorigin=anonymous'], 'audio', null);
+      }
+      //this is causes to throw error when set again to the same source!! need to be fixed inside the component
+      //var setAnalyser = 'audioanalyser=src: #'+thisAudio+';  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;';
+      //var setAnalyser = 'src: #'+thisAudio+';';
       
-      var setAnalyser = 'audioanalyser=src: #'+thisAudio+';  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;';
+      document.getElementById('myAnalyser'+i).setAttribute('audioanalyser', 'src: #'+thisAudio+';');
+      //setAnalyser = 'data-placeholder=0';
       
       //scene specific code-----------------
       if( scenes[currScene].modId == 3){ //BRATRI
@@ -96,20 +102,21 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
            
        switch(i) {                                                                                                                                //'obj-model=obj: '+scenes[currScene].modSrc[i]+';' //gltf-model=models/deco/skeleton.glb //'material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;'
         case 0:                                                                                                                                                                                                                                                                                                                                                                                                                                                    //analyserEl: #sound_reactive1;
-          addEntity(scenemodels,  ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio ,setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_lines ; color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat','color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels,  ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_lines ; color: grey; offset: 0 0; repeat: 13 13;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'ring-on-beat=analyserEl: #myAnalyser0;','color-on-beat=counter: 255; analyserEl: #myAnalyser0;'], 'a-entity', null );
         break;
         case 1:
-          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_circle; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_circle; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255; analyserEl: #myAnalyser1;'], 'a-entity', null );
         break;
         case 2:
-          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255;'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_symbols; color: grey; offset: 0 0; repeat: 5 5;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'color-on-beat=counter: 255; analyserEl: #myAnalyser2;'], 'a-entity', null );
         break;
         default:
-          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio , setAnalyser,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_strip; color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials'], 'a-entity', null );
+          addEntity(scenemodels, ['class=model', 'look-at=#camera_rig','data-audioid='+thisAudio,'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast:false; receive: false;', 'obj-model=obj: '+scenes[currScene].modSrc[i]+';','material=src: #tex_strip; color: grey; offset: 0 0; repeat: 50 50;','position='+scenes[currScene].modPos[i],'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;', 'modify-materials=analyserEl: #myAnalyser3;'], 'a-entity', null );
         }
       }else{
         //load sound from cache
-        addEntity(scenemodels, ['class=model', 'look-at=#camera_rig', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i], 'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null );      
+        //addEntity(scenemodels, ['class=model', 'look-at=#camera_rig', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i], 'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null );      
+        addEntity(scenemodels, ['class=model', 'look-at=#camera_rig', 'data-audioid='+thisAudio, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i], 'sound=src: #'+thisAudio+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null );      
         
         //load sound directly
         //addEntity(scenemodels, ['class=model', 'look-at=#camera_rig', 'data-audioid='+thisAudio , setAnalyser, 'id='+currId,'scale='+scenes[currScene].modScale[i],'shadow=cast: false; receive: false;', 'gltf-model='+scenes[currScene].modSrc[i],'position='+scenes[currScene].modPos[i], 'sound=src: '+scenes[currScene].modSound[i]+'; volume: '+scenes[currScene].modVol[i]+'; autoplay: false; distanceModel: exponential; rolloffFactor: 2;'], 'a-entity', null );      
@@ -162,7 +169,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         addEntity(decoEl, ['id=scene_floor','position=0 0 0', 'height=100', 'width=100', 'src=#tex_floor', 'material=repeat: 20 20;', 'shadow=receive: false;', 'rotation=-90 0 0'], 'a-plane', null);
         //add light reacting to first music track
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
-        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model1;'], 'a-light', null);
+        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #myAnalyser0;'], 'a-light', null);
         break;
       case 4://susanne        
         document.getElementById('VR_scene').setAttribute('fog','type: linear; color: #AAB; far: 65; near: 0');
@@ -173,7 +180,8 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
         addEntity(decoEl, ['id=lightDefault','color=white','type=directional', 'intensity=0.4', 'castShadow=true', 'position=-5 3 1.5'], 'a-light', null);           
         //add light reacting to first music track
         addEntity(decoEl, ['id=target_1','position=-0 0 0'], 'a-entity', null);                 
-        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model1;'], 'a-light', null);
+        addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #myAnalyser0;'], 'a-light', null);
+        //addEntity(decoEl, ['id=sound_light','color=orange','type=spot','angle=45', 'intensity=1.0', 'castShadow=true', 'position=-20.0 50.0 -20.0', 'rotation=-90 0 0', 'target=#target_1', 'audio-vol-light=multiplier: 0.1; analyserEl: #model1;'], 'a-light', null);
         break;
       default:
         // code block

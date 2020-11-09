@@ -2,7 +2,7 @@
 AFRAME.registerComponent('createmenu', {  
   init:function() {
 
-    content = ["EXPERIMENT\nAlexandra Cihanska Machova", "CLASSIC\nGary Rushton", "EXPERIMENT  Ian Mykiska", "TECHNO\nBratri", "CINEMATIC\nSusanne Hardt", "?\nComing soon"];  
+    content = ["AMBIENT\nAlexandra Cihanska Machova", "CLASSIC\nGary Rushton", "EXPERIMENT\nIan Mikyska", "TECHNO\nBratri", "CINEMATIC\nSusanne Hardt", "?\nComing soon"]; 
 
     if( document.getElementById('cam') ){//check that camera exists - this is not the case when first loaded - in that case it is centered by parameter set at the element entity in html
         document.getElementById('cam').setAttribute('position','0 1.6 0'); //reset camera postion to center
@@ -12,8 +12,9 @@ AFRAME.registerComponent('createmenu', {
      document.getElementById("currmodels").innerHTML = '';   
      //delete all decorations from previous scene
      document.getElementById('scenedeco').innerHTML = '';
+     
      //delete all assets
-     document.getElementById('myassets').innerHTML = '';  
+     //document.getElementById('myassets').innerHTML = '';  
     //------------------------------------------
      document.getElementById('VR_scene').setAttribute('background','color: #000');
      document.getElementById('VR_scene').removeAttribute("fog");

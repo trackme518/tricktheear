@@ -48,9 +48,10 @@
         </div>
         color: #AAB;
         stats
+        stats
         -->
                    
-        <a-scene stats id="VR_scene"  loading-screen="dotsColor: white; backgroundColor: black" fog="type: linear; color: #AAB; far: 35; near: 0" antialias="false" background="color: black;">
+        <a-scene id="VR_scene"  loading-screen="dotsColor: white; backgroundColor: black" fog="type: linear; color: #AAB; far: 35; near: 0" antialias="false" background="color: black;">
         <!-- position x= -vlevo + vpravo; y=výška + nahoru, - dolu;  z= - dopredu / + dozadu  -->                      
         <!-- pitch / yaw / roll ve skutecnosti ale yaw / pitch / roll -->           
             <a-curve closed="true" id="track1">
@@ -79,6 +80,13 @@
             <!-- placeholder for dynamically loaded models - see loadScene.js ->  rotation="0 35 0" loadscene component -->
             <a-entity rotation="0 35 0" id="currmodels" ></a-entity>
             
+            <a-entity id="audioAnalysers">
+                <a-entity id="myAnalyser0" audioanalyser="src: ;  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;"></a-entity>
+                <a-entity id="myAnalyser1" audioanalyser="src: ;  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;"></a-entity>
+                <a-entity id="myAnalyser2" audioanalyser="src: ;  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;"></a-entity>
+                <a-entity id="myAnalyser3" audioanalyser="src: ;  beatDetectionThrottle: 50; enableBeatDetection: true; enableLevels: false; enableWaveform: false; beatDetectionMinVolume: 0.1; fftSize: 128;"></a-entity>
+            </a-entity>
+            
              <!-- placeholder for dynamically loaded dressing components see loadscene component -->
             <a-entity id="scenedeco"></a-entity> 
                                                              
@@ -99,7 +107,10 @@
             <a-entity id="camera_rig" position="0 0 0"> <!-- camera rig start-->
             
             <!-- use rotation-reader to log camera movement and rotation -->          
-            <a-camera rotation-reader="ip: ws://10.0.0.18:8025/track; position: true, rotation: true; interval: 100;" far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                          
+            <!--
+            <a-camera rotation-reader="ip: ws://10.0.0.18:8025/track; position: true, rotation: true; interval: 100;" far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">
+            --> 
+            <a-camera far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">                         
                 <!-- Text element for display messaging.  Hide once audio is playing. -->  	                 
                 
                <a-box  id="fade" color="black" height="2" width="2" depth="2" position="0 0 0" transparent="true" material="opacity: 0.0; shader: flat; side: back;"
