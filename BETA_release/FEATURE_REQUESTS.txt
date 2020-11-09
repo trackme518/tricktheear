@@ -1,1 +1,3 @@
 add superhands to VR
+reset position button
+exit played song button
