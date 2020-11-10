@@ -35,7 +35,11 @@
 <script src="https://rawgit.com/protyze/aframe-curve-component/master/dist/aframe-curve-component.min.js"></script> 
 <script src="https://rawgit.com/protyze/aframe-alongpath-component/master/dist/aframe-alongpath-component.min.js"></script>
 
-<script src="scripts/logCamera.js"></script>  <!-- log camera movement + rotation for research and debug --> 
+<script src="scripts/logCamera.js"></script>  <!-- log camera movement + rotation for research and debug -->
+<!--
+<script src="FileSaver.js"></script>
+-->
+<!--to save scene as 360 video --> 
              
     </head>    
     <body>          
@@ -137,6 +141,21 @@
                                         -->                   
             </a-camera>
             </a-entity> <!-- camera rig end-->                  
-        </a-scene>  
+        </a-scene>
+        <script>
+          /*
+          var currScene = document.getElementById("VR_scene");
+          var frameIndex = 0;
+          // `screenshot.projection` property can be `equirectangular` or `perspective`.
+          if( currScene ){
+            var currFrame  = currScene.components.screenshot.getCanvas('equirectangular');
+             currFrame.toBlob(function(blob) {
+             frameIndex++; 
+                saveAs(blob, "scene_"+frameName+".png");
+            });
+          }
+          */
+        </script>
+          
     </body>
 </html>
