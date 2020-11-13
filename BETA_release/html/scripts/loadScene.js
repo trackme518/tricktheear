@@ -52,6 +52,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     this.assetCount = assetCount;
     }
     
+    //position x= -vlevo + vpravo; y=výška + nahoru, - dolu;  z= - dopredu / + dozadu     
     //creating new instances of scene object
     //0=sasa
     scenes.push( new vrScene( 0, 15,['1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5', '1.5 1.5 1.5'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['3.5', '3.5', '3.5', '3.5'], ['models/sasa/trpelivost.glb', 'models/sasa/lehkomyslnost.glb', 'models/sasa/laska.glb', 'models/sasa/lstivost.glb'],['audio/sasa/trpelivost.ogg', 'audio/sasa/lehkomyslnost.ogg', 'audio/sasa/laska.ogg', 'audio/sasa/lstivost.ogg'] )  );
@@ -62,7 +63,7 @@ document.querySelector('#fade').addEventListener( 'animationcomplete', loadScene
     //3=bratri
     scenes.push( new vrScene( 3, 11,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'],['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['3.5', '3.5', '3.5', '3.5'], ['models/bratri/stridmost4.obj', 'models/bratri/lakomstvi2.obj', 'models/bratri/pile2.obj', 'models/bratri/pomluva2.obj'],['audio/bratri/stridmost.ogg','audio/bratri/lakomstvi.ogg', 'audio/bratri/pile.ogg', 'audio/bratri/pomluva.ogg'] )  );
     //4=sussanne
-    scenes.push( new vrScene( 4, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['0 0 -4', '-4 0 0', '0 0 4', '4 0 0'], ['3.5', '3.5', '3.5', '3.5'], ['models/susanne/podvod.glb', 'models/susanne/uprimnost.glb', 'models/susanne/zavist.glb', 'models/susanne/moudrost.glb'],['audio/susanne/test11.ogg', 'audio/susanne/test22.ogg', 'audio/susanne/test33.ogg', 'audio/susanne/test44.ogg'] )  );
+    scenes.push( new vrScene( 4, 12,['1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0', '1.0 1.0 1.0'], ['3 0 1', '3.3 0 -1', '-2 0 -1', '-4 0 4'], ['3.5', '3.5', '3.5', '3.5'], ['models/susanne/podvod.glb', 'models/susanne/uprimnost.glb', 'models/susanne/zavist.glb', 'models/susanne/moudrost.glb'],['audio/susanne/test1.ogg', 'audio/susanne/test2.ogg', 'audio/susanne/test3.ogg', 'audio/susanne/test4.ogg'] )  );
     //num of assets: 4 mesh models(4 statues) + 4 sound components + ( 4textures if .obj ) + a-sky texture / floor texture + dressing elements models -> just check the console!  
     if( parseInt(currScene) > scenes.length-1 ){
     console.log('wrong scene id -> select scene in range')
