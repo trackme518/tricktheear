@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+<script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
+  <title></title>
+  </head>
+  <body>
+  <button onclick="javascript:playme()">play</button>
+
+<script>
+
+// Create an AudioContext
+let audioContext = new AudioContext();
+
+// Create a (first-order Ambisonic) Resonance Audio scene and pass it
+// the AudioContext.
+let resonanceAudioScene = new ResonanceAudio(audioContext);
+// Connect the scene’s binaural output to stereo out.
+resonanceAudioScene.output.connect(audioContext.destination);
+// Define room dimensions.
+// By default, room dimensions are undefined (0m x 0m x 0m).
+let roomDimensions = {
+  width: 3.1,
+  height: 2.5,
+  depth: 3.4,
+};
+// Define materials for each of the room’s six surfaces.
+// Room materials have different acoustic reflectivity.
+let roomMaterials = {
+  // Room wall materials
+  left: 'brick-bare',
+  right: 'curtain-heavy',
+  front: 'marble',
+  back: 'glass-thin',
+  // Room floor
+  down: 'grass',
+  // Room ceiling
+  up: 'transparent',
+};
+// Add the room definition to the scene.
+resonanceAudioScene.setRoomProperties(roomDimensions, roomMaterials);
+
+// Create an AudioElement.
+let audioElement = document.createElement('audio');
+
+// Load an audio file into the AudioElement.
+audioElement.src = 'http://10.0.0.17:80/stream';
+
+audioElement.crossOrigin="anonymous";
+
+// Generate a MediaElementSource from the AudioElement.
+let audioElementSource = audioContext.createMediaElementSource(audioElement);
+
+// Add the MediaElementSource to the scene as an audio input source.
+let source = resonanceAudioScene.createSource();
+audioElementSource.connect(source.input);
+
+// Set the source position relative to the room center (source default position).
+source.setPosition(-0.707, -0.707, 0);
+
+// Play the audio.
+function playme(){
+audioElement.play();
+console.log("play");
+}
+
+</script>
+    
+  </body>
+</html>

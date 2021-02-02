@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>Virtual virtues and vices demo</title>
+    <meta name="description" content="Basic Scene with Environment - A-Frame">
+    
+    <link rel="stylesheet" href="style.css"> 
+
+<script src="./scripts/aframe104.js">  </script> <!-- main framwork -->
+<script src="./event_set_component_412.js"></script>  <!-- enable mouse to act as cursor on desktop --> 
+
+ <!--
+<script src="./audioAnalyser.js"></script>
+     -->
+<script src="./aframe-audioanalyser-component.js"></script>
+
+<script src="./scripts/intensity.js"></script>
+
+
+<script src="./particle.js"></script>
+<!--  
+<script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script> 
+-->
+<!-- custom audio fader instead of hard click on ON/OFF - works along with animation properties on entity -->
+<!--
+
+  
+<script src="./fade_audio.js"></script> 
+-->
+
+<!-- 
+<script src="https://unpkg.com/aframe-ambisonic-component"></script>
+-->
+<!-- 
+<script src="./scripts/hide-once-playing.js"></script>
+<script src="./scripts/play-on-window-click.js"></script>
+<script src="./scripts/play-on-vrdisplayactivate-or-enter-vr.js"></script>
+ -->
+<script src="./scripts/play-on-window-click.js"></script>
+
+<!--
+<script src="https://samsunginter.net/a-frame-components/dist/ocean-plane.js"></script>
+-->
+
+<script>
+
+AFRAME.registerComponent('wobble-normal', {
+	schema: {},
+	tick: function (t) {
+		if (!this.el.components.material.material.normalMap) return;
+		this.el.components.material.material.normalMap.offset.x += 0.00001 * Math.sin(t/10000);
+		this.el.components.material.material.normalMap.offset.y += 0.00001 * Math.cos(t/8000);
+		this.el.components.material.material.normalScale.x = 0.5 + 0.5 * Math.cos(t/1000);
+		this.el.components.material.material.normalScale.x = 0.5 + 0.5 * Math.sin(t/1200);
+	}
+})
+
+AFRAME.registerPrimitive('a-ocean-plane', {
+	defaultComponents: {
+		geometry: {
+			primitive: 'plane',
+			height: 10000,
+			width: 10000
+		},
+		rotation: '-90 0 0',
+		material: {
+			shader: 'standard',
+			color: '#000000',
+			metalness: 1,
+			roughness: 0.2,
+			normalMap: 'url(https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/waternormals.jpg)',
+			normalTextureRepeat: '50 50',
+			normalTextureOffset: '0 0',
+			normalScale: '0.5 0.5',
+			opacity: 0.8
+		},
+		'wobble-normal': {}
+	},
+});
+
+
+</script>
+
+</head>
+<body>
+ <!-- hack the autoplay ban - user must interact first -->
+
+<!--
+     fog="type: linear; color: #AAB; far: 35; near: 0"   
+-->   
+  <a-scene  id="VR_scene" loading-screen="dotsColor: white; backgroundColor: black" 
+    fog="type: linear; color: #AAB; far: 35; near: 0"
+    antialias="false">
+
+
+<!--    
+  <a-sky src="bg.jpg" rotation="0 -130 0"></a-sky>
+-->
+
+<!--
+   <a-entity position="0 2.25 -15" particle-system="preset: dust;  particleCount: 500; color: #FFE8E8, #E8FFF0"></a-entity>
+    -->
+<a-assets id="assets" timeout="1000">
+
+<a-gltf-model id="vira" src="faith_7k_jpeg.gltf" preload="auto" class="model"></a-gltf-model>
+<a-gltf-model id="nadeje" src="nadeje_6k_jpeg.gltf" preload="auto" class="model"></a-gltf-model>
+
+<a-gltf-model id="skeleton" src="skeleton_embedded6.gltf" preload="auto" class="model"></a-gltf-model>
+
+<img id="water-normal" src="https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/waternormals.jpg" crossorigin="anonymous" />
+<img id="sky" src="./sky_night.jpg" />
+
+<img id="waterTex" src="./water_tex.jpg" />
+<!--
+<a-gltf-model id="cave" src="optimize_cave.gltf" preload="auto" class="model"></a-gltf-model>
+-->
+
+<!--
+<audio id="audio_1" crossOrigin="anonymous" src="./1_AIVA_multiTrack_bass.ogg"  class="model" preload="auto"></audio>
+-->
+<audio id="audio_1" crossOrigin="anonymous" src="http://10.0.0.17:8080/" class="model"></audio>
+
+<audio id="audio_2" crossOrigin="anonymous" src="./2_AIVA_multiTrack_chords.ogg" class="model" preload="auto"></audio>   
+<audio id="audio_3" crossOrigin="anonymous" src="./3_AIVA_multiTrack_melody.ogg" class="model" preload="auto"></audio>
+ 
+<a-asset-item id="currFont" src="./mozillavr.fnt"></a-asset-item>
+
+</a-assets>     
+<!--
+<a-sky src="#sky"></a-sky>
+
+-->
+<a-sky src="#sky" material="fog: false"></a-sky>
+           
+           <a-entity light="type: directional; color: rgb(255,255,255); intensity: 1.0;" position="-6.0 10.0 -3.0"></a-entity>
+           <a-entity light="type: ambient; color: rgb(255,255,255); intensity: 1.0;" ></a-entity>
+
+           <a-ocean-plane material="normalMap: #water-normal; sphericalEnvMap: #waterTex;" position="0 0 0" ></a-ocean-plane> 
+      
+      <!--
+       font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/imfelldoublepica/IMFeDPit28P.json;"
+       
+       font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/arimo/Arimo-Bold.json;"
+        font: mozillavr;" 
+       font:https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/zillaslab/ZillaSlab-Bold.json;" 
+       --> 
+      <a-entity  text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value:COMPOSER:  Alexandra Cihanska Machova; anchor: center; color:#FFFFFF; wrapCount: 10; width: 2;"
+     position="0.2 2 -4"></a-entity>    
+           
+           
+       <!--           <a-entity animation="property: rotation; to: 0 360 0; dur: 800000; easing: linear; loop: true">    -->
+          
+            <!--<a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>-->
+            <!--< <a-entity light="type: directional; color: rgb(235,255,235); intensity: 1.0; castShadow: true;" position="-6.0 10.0 -3.0"  rotation="-90 0 0" target="#target_1"
+            
+            audioanalyser="src: #audio_1; enableVolume: true; enableLevels: false; enableBeatDetection: false;  enableWaveform: false; fftSize: 128; "
+            audioanalyser-volume-intensity="multiplier: 0.1"
+             color="#a6fcda"
+            
+             -->
+            <a-light id="soundReactive" 
+            color="orange" type="spot" angle="45" intensity="1.0" castShadow="true"
+            position="-6.0 30.0 -3.0"  rotation="-90 0 0" target="#target_1"  
+            audioanalyser="src: #audio_1; enableVolume: true; enableLevels: false; enableBeatDetection: false;  enableWaveform: false; fftSize: 128; "
+            audioanalyser-volume-intensity="multiplier: 0.1" 
+            >
+                <a-entity id="target_1" position="0 0 -1"></a-entity>
+                <a-sphere radius="3.0" color="white" id="moon"></a-sphere>          
+            </a-light>
+            
+              <!--   </a-entity>  -->              <!-- end animation  -->
+         
+          
+       <!-- position x= -vlevo + vpravo; y=výška + nahoru, - dolu;  z= - dopredu / + dozadu  -->
+       <!-- pitch / yaw / roll ve skutecnosti ale yaw / pitch / roll
+       
+       animation__fadeOut="property: sound.volume; from: 1.0; to: 0.0; dur: 500; startEvents: fadeOut"
+             animation__fadeIn="property: sound.volume; from: 0.0; to: 1.0; dur: 500; startEvents: fadeIn"
+       
+       
+       -->
+       
+            <!-- NADEJE light="type: point; intensity: 5.0;  distance: 5; decay: 2; color: #AFA" play-on-window-click
+            
+             sound="src: #audio_1; volume: 0.3; autoplay: false; distanceModel: inverse;"
+                 play-on-window-click 
+            
+              <a-sound src="src: #audio_1" autoplay="true" position="0.0 -0.3 -3" play-on-window-click></a-sound>
+            -->             
+                
+              <a-entity rotation="0 35 0" >
+              
+                 <a-entity id="socha_nadeje" gltf-model="#nadeje" audiohandler position="0.0 -0.3 -3" rotation="0 0 0" class="clickable" 
+                  scale="1.0 1.0 1.0" shadow="cast: true">
+                      <a-sound src="#audio_1" autoplay="false" play-on-window-click></a-sound>
+                 </a-entity>
+                 
+                 
+                 <!-- VIRA light="type: point; intensity: 5.0;  distance: 5; decay: 2; color: #AFA" -->
+         
+                 <a-entity id="socha_vira" gltf-model="#vira" audiohandler position="0.0 0 3" rotation="0 180 0" class="clickable" 
+                  scale="1.0 1.0 1.0" shadow="cast: true">
+                        <a-sound src="#audio_2" autoplay="false" play-on-window-click></a-sound>
+                 </a-entity>
+              
+       
+                 <!-- PLACEHOLDER light="type: point; intensity: 5.0;  distance: 5; decay: 2; color: #AFA"  -->
+               
+                 <a-entity id="socha_placeholder" gltf-model="#vira" audiohandler position="3 0 0" rotation="0 270 0" class="clickable" 
+                  scale="1.0 1.0 1.0" shadow="cast: true">
+                        <a-sound src="#audio_3" autoplay="false" play-on-window-click></a-sound>
+                 </a-entity>
+             
+             </a-entity>
+             
+             
+             <a-entity id="skeleton" gltf-model="#skeleton" position="0 0 -20" rotation="0 0 0" modify-materials scale="2.0 2.0 2.0" src="tex.jpg" shadow="cast: true"></a-entity>
+             
+             
+             <!--
+             <a-entity id="cave" gltf-model="#cave" position="0 0 -20" rotation="0 0 0"  scale="2.0 2.0 2.0" shadow="cast: false"></a-entity>
+             -->
+
+          
+    <a-entity laser-controls="hand: right" raycaster="objects: .clickable;"></a-entity>  
+    
+    <!-- enable mouse control on desktop -->   
+    <a-entity id="mouseCursor" cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-entity> 
+                  
+    <!-- enable wasd / arrows control on desktop -->
+   <!-- <a-camera far="60" near="0.1"></a-camera> -->
+     <!--
+    <a-entity id="cam" camera="active: true" look-controls mouse-cursor wasd-controls position="0 1.6 0">
+      -->
+      <a-camera far="600" near="0.1" id="cam" look-controls mouse-cursor wasd-controls position="0 1.6 0">
+    
+    <!-- Text element for display messaging.  Hide once audio is playing. -->
+	<!-- 
+    <a-entity id="msg" position="0 -0.3 -1.5" text="align:center; width:3;wrapCount:100;color:white;value:Click window to make audio play." visible="true"></a-entity>
+    -->
+      <!--
+    <a-entity id="cam" camera="active: true" position="0 1.6 0"> 
+          -->
+  <!-- enable gaze control / fuse control on mobile... --> 
+        <!--
+        <a-entity animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+        animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+        animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 500; to: 1 1 1"
+        cursor="maxDistance: 30; fuse: false;"
+        raycaster="objects: .clickable"
+        material="color: cyan; shader: flat"
+        position="0 0 -1"
+        geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03;">
+        </a-entity>
+        -->
+
+    </a-camera>
+    
+  </a-scene>
+
+ <script>
+ /*
+  // A-Frame 'loaded' event, because <a-assets> is an A-Frame node
+document.querySelector( 'a-assets' ).addEventListener( 'loaded', function () { 
+
+//document.querySelector('#loading').style.cssText = "display: none;";
+//alert( 'a-assets loaded' );
+
+//document.querySelector('#socha_nadeje').components.sound.playSound();
+//document.querySelector('#socha_vira').components.sound.playSound();
+
+
+} );
+
+var models = document.getElementsByClassName("model");
+
+
+var countLoaded = 0;
+
+for(var i = 0; i < models.length; i++){
+    models[i].addEventListener("vojo", assetLoaded() ) ;
+    //models[i].addEventListener('loaded', assetLoaded() );
+}
+
+if(countLoaded == models.length){
+document.querySelector('#loading').style.cssText = "display: none;";
+//alert("loaded all assets"+countLoaded);
+
+}
+
+// Standard DOM 'load' event, because #field is an <img>
+//document.querySelector( '#audio_1' ).addEventListener( 'load', assetLoaded() );
+
+/*
+for (i = 0; i < cars.length; i++) {
+  text += cars[i] + "<br>";
+} 
+*/
+function assetLoaded(){
+//alert("loaded asset");
+countLoaded++;
+}
+
+var startBtn = document.querySelector('#btn-start');
+
+startBtn.onclick = ( function() {
+    //document.querySelector('#myBox').emit('hraj');
+    
+    
+   //start all tracks = autoplay
+    //document.querySelector('#socha_nadeje').components.sound.playSound();
+    //document.querySelector('#socha_vira').components.sound.playSound();   
+    
+    });
+    </script>
+
+
+    <script>
+/*
+window.context = new AudioContext();
+
+video = context.createMediaElementSource(document.getElementById('audio_1'));
+analyser = context.createAnalyser(); //we create an analyser
+analyser.smoothingTimeConstant = 0.9;
+analyser.fftSize = 512; //the total samples are half the fft size.
+video.connect(analyser);
+analyser.connect(context.destination);
+
+var currEl =  document.getElementById('soundReactive');
+
+var currMax = 0;
+var timeStamp = (new Date()).getTime();
+var interval = 500;
+
+function draw() {
+  var array = new Uint8Array(analyser.fftSize);
+  analyser.getByteTimeDomainData(array);
+
+  var average = 0.0;
+  var max = 0.0;
+  for (i = 0; i < array.length; i++) {
+    a = Math.abs(array[i] - 128);
+    average += a;
+    max = Math.max(max, a);
+  }
+
+  average /= array.length;
+ 
+ //-------------------------- 
+ if(average > currMax){
+ currMax = average;
+ timeStamp = (new Date()).getMilliseconds();
+ }
+ 
+ if( (new Date()).getMilliseconds() > timeStamp+interval  ){
+ currMax -= 0.1;
+ }
+ 
+ if(currMax < 0){
+ currMax = 0;
+ }
+
+  console.log(currMax);
+  
+  currEl.setAttribute("intensity", currMax);
+  //ctx.arc(128, 128, average, 0, Math.PI * 2, true);
+  //ctx.arc(128 + 256, 128, max, 0, Math.PI * 2, true);
+
+  requestAnimationFrame(draw);
+  context.resume(); //for chrome!
+}
+draw();
+*/    
+</script>
+
+ <script>
+      AFRAME.registerComponent('modify-materials', {
+        init: function () {
+          // Wait for model to load.
+          this.el.addEventListener('model-loaded', () => {
+            // Grab the mesh / scene.
+            const obj = this.el.getObject3D('mesh');
+            // Go over the submeshes and modify materials we want.
+            obj.traverse(node => {
+              if (node.name.indexOf('hrudnik') !== -1) {
+                node.material.color.set('#6e6962');
+                node.material.src.set('tex.jpg');
+              }
+            });
+          });
+        }
+      });
+    </script>
+</body>
+
+</html>

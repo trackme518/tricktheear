@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="PSPad editor, www.pspad.com">
+<script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
+  <title></title>
+  </head>
+  <body>
+  <button id="sourceButton">Play</button>
+
+<script>
+let audioContext;
+let scene;
+let audioElement;
+let audioElementSource;
+let source;
+let audioReady = false;
+
+/**
+ * @private
+ */
+function initAudio() {
+  audioContext = new (window.AudioContext || window.webkitAudioContext);
+
+  // Create a (1st-order Ambisonic) ResonanceAudio scene.
+  scene = new ResonanceAudio(audioContext);
+
+  // Send scene's rendered binaural output to stereo out.
+  scene.output.connect(audioContext.destination);
+
+  // Set room acoustics properties.
+  let dimensions = {
+    width: 3.1,
+    height: 2.5,
+    depth: 3.4,
+  };
+  let materials = {
+    left: 'brick-bare',
+    right: 'curtain-heavy',
+    front: 'marble',
+    back: 'glass-thin',
+    down: 'grass',
+    up: 'transparent',
+  };
+  scene.setRoomProperties(dimensions, materials);
+
+  // Create an audio element. Feed into audio graph.
+  audioElement = document.createElement('audio');
+  
+  audioElement.src = 'http://10.0.0.17:80/streamcors';
+  //audioElement.src = 'http://10.0.0.17:8080/stream';
+  //audioElement.src = 'sample.mp3';
+  audioElement.crossOrigin = 'anonymous';
+  audioElement.load();
+  audioElement.loop = true;
+
+  audioElementSource = audioContext.createMediaElementSource(audioElement);
+
+  // Create a Source, connect desired audio input to it.
+  source = scene.createSource();
+  audioElementSource.connect(source.input);
+
+  // The source position is relative to the origin
+  // (center of the room).
+  source.setPosition(-0.707, -0.707, 0);
+
+  audioReady = true;
+}
+
+let onLoad = function() {
+  // Initialize play button functionality.
+  let sourcePlayback = document.getElementById('sourceButton');
+  //console.log(sourcePlayback.id);
+  sourcePlayback.onclick = function(event) {
+    switch (event.target.textContent) {
+      case 'Play': {
+        if (!audioReady) {
+          initAudio();
+        }
+        event.target.textContent = 'Pause';
+        audioElement.play();
+        console.log("play");
+      }
+      break;
+      case 'Pause': {
+        event.target.textContent = 'Play';
+        audioElement.pause();
+      }
+      break;
+    }
+  };
+}
+window.addEventListener('load', onLoad);
+
+/*
+// Play the audio.
+function playme(){
+audioElement.play();
+console.log("play");
+}
+*/
+</script>
+    
+  </body>
+</html>

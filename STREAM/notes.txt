@@ -1,0 +1,9 @@
+vlc options - start streaming at 8080
+
+:sout=#transcode{vcodec=none,acodec=mp3,ab=128,channels=2,samplerate=44100}:http{mux=mp3,dst=:8080/stream} :sout-keep
+
+
+proxy server to grab the stream:
+http://10.0.0.17:80/stream
+
+electric counterpoint 12guitars
