@@ -52,6 +52,7 @@ function initAudio() {
   //audioElement.src = 'http://10.0.0.17:8080/stream';
   //audioElement.src = 'sample.mp3';
   audioElement.crossOrigin = 'anonymous';
+  audioElement.preload = 'none';
   audioElement.load();
   audioElement.loop = true;
 
