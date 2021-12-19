@@ -1,7 +1,7 @@
 # Trick The Ear
 Music in VR implemented in A-frame framework
 
-More information at: https://tricktheear.eu/download/
+More information at: https://tricktheear.eu/download/. We provide live demo online at https://tricktheear.eu/vr-music/. 
 
 If you are here for Camera logging component for tracking user movement and rotation in VR and sending the data over websocket you can use it like this:
 
