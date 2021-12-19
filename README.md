@@ -33,6 +33,8 @@ https://github.com/trackme518/tricktheear/tree/master/logVR/BUILD
 You can start recording the incoming data by pressing "r" on keyboard. You will end recording by pressing "r" again. Data will be saved in data folder with current date in the file name. We have also added heatmap image as an output - it is generated automatically when recording.
 
 ## Licence - MIT, open source
+All code in this repository is licenced under MIT licence - see below. If you want to use audio assets - songs, you must list the respective composer name of the song. Please refer to https://tricktheear.eu/download/ for more. Composers names: Alexandra Cihanská Machová (folder sasa), Gary Rushton (folder gary), Bratri (folder bratri), Suasanne Hardt (folder susanne), Michna z Otradovic (folder baroko), Ian Mikyska (folder ian). It would also be nice if you would link back to tricktheear.eu or this github repository. 
+
 Copyright 2020 Vojtěch Leischner
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
